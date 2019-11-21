@@ -2,7 +2,7 @@ import numpy as np
 from datetime import datetime
 import os
 import ROOT
-
+import LORAparameters as LORA
 
 nTraceV1=4000
 nDetV1=20
@@ -66,6 +66,11 @@ def getTime(det, entry):
     ctd=det.GetLeaf('CTD').GetValue()
     nsec=det.GetLeaf('nsec').GetValue()
     return ymd,gps,ctd,nsec
+
+def getTimeSec(lasa, entry):
+    lasa.GetEntry(entry)
+    gps=lasa.GetLeaf('GPS_time_stamp').GetValue()
+    return gps
 
 def find_entry_number(lora_utc,lora_nsec,tree_event):
     event=-1
@@ -144,10 +149,111 @@ def return_root(filename,utc,nsec,data_dir):
     event_index=find_entry_number(utc,nsec,tree_event)
     all_info=[]
     for i in np.arange(nDetV1):
-        print i
         detname='Det'+str(1+i)
         det=tree_event.GetBranch(detname)
         info=getDataV1(det,event_index)
         all_info.append(info)
 
     return all_info
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def find_sec_number(lora_utc,tree_sec,i):
+    event=-1
+    
+    lasa1=tree_sec.GetBranch('Lasa'+str(i+1))
+
+
+    lasa1.GetLeaf('GPS_time_stamp')
+    nE= lasa1.GetEntries()
+    #times=np.zeros([nLasa,nE])
+    diff_best=1e10
+    event=-1
+    index_found=0
+    
+    for e in np.arange(nE):
+        
+        gps1= getTimeSec(lasa1,e)
+        if gps1==lora_utc and index_found==0:
+            event=e
+            index_found=1
+        if gps1>lora_utc and index_found==0:
+            event=e
+            index_found=1
+
+    return event
+
+
+
+
+
+
+
+
+
+
+
+
+
+def getSecV1(det, entry):
+    
+    det.GetEntry(entry)
+    
+    lasa=det.GetLeaf('Lasa').GetValue()
+    
+    YMD=det.GetLeaf('YMD').GetValue()
+
+    GPS_time_stamp=det.GetLeaf('GPS_time_stamp').GetValue()
+    sync=det.GetLeaf('sync').GetValue()
+    CTP=det.GetLeaf('CTP').GetValue()
+    quant=det.GetLeaf('quant').GetValue()
+    Channel_1_Thres_count_high=det.GetLeaf('Channel_1_Thres_count_high').GetValue()
+    Channel_1_Thres_count_low=det.GetLeaf('Channel_1_Thres_count_low').GetValue()
+    Channel_2_Thres_count_high=det.GetLeaf('Channel_2_Thres_count_high').GetValue()
+    Channel_2_Thres_count_low=det.GetLeaf('Channel_2_Thres_count_low').GetValue()
+    Satellite_info=det.GetLeaf('Satellite_info').GetValue()
+
+    info={'lasa':lasa,'YMD':YMD,'GPS_time_stamp':GPS_time_stamp,'sync':sync,'CTP':CTP,'quant':quant}
+    return info
+
+
+def return_second_data(filename,utc,nsec,data_dir):
+
+    log_file=open(data_dir+filename+'.log','r')
+    root_file=ROOT.TFile.Open(data_dir+filename+'.root')
+    tree_sec = root_file.Get("Tree_sec")
+    tree_event = root_file.Get("Tree_event")
+    tree_log = root_file.Get("Tree_log")
+    tree_noise = root_file.Get("Tree_noise")
+
+    entry=np.zeros([LORA.nLASA])
+    
+    for i in np.arange(LORA.nLASA):
+        entry[i]=find_sec_number(utc,tree_sec,i)
+    
+    all_info=[]
+    all_info1=[]
+    all_info2=[]
+
+    
+    for i in np.arange(LORA.nLASA):
+        lasaname='Lasa'+str(1+i)
+        det=tree_sec.GetBranch(lasaname)
+        all_info.append(getSecV1(det, int(entry[i])))
+        all_info1.append(getSecV1(det, int(entry[i]+1)))
+        all_info2.append(getSecV1(det, int(entry[i]+2)))
+
+    return all_info,all_info1,all_info2
+

@@ -12,6 +12,10 @@
 		4148787723746F7200C2FC19 /* read_functions.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = read_functions.py; sourceTree = "<group>"; };
 		4148787823756AFA00C2FC19 /* plot_functions.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = plot_functions.py; sourceTree = "<group>"; };
 		41487879237572A700C2FC19 /* process_functions.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = process_functions.py; sourceTree = "<group>"; };
+		4148787A2375790700C2FC19 /* LORAparameters.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LORAparameters.py; sourceTree = "<group>"; };
+		4148787B23759F3400C2FC19 /* event_time.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = event_time.py; sourceTree = "<group>"; };
+		4148787C2375D03500C2FC19 /* detector.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = detector.py; sourceTree = "<group>"; };
+		4148787D2375D76F00C2FC19 /* event.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = event.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -20,9 +24,13 @@
 			children = (
 				414878752373439100C2FC19 /* README */,
 				41487876237433D500C2FC19 /* test.py */,
+				4148787D2375D76F00C2FC19 /* event.py */,
+				4148787C2375D03500C2FC19 /* detector.py */,
 				4148787823756AFA00C2FC19 /* plot_functions.py */,
 				4148787723746F7200C2FC19 /* read_functions.py */,
 				41487879237572A700C2FC19 /* process_functions.py */,
+				4148787A2375790700C2FC19 /* LORAparameters.py */,
+				4148787B23759F3400C2FC19 /* event_time.py */,
 			);
 			sourceTree = "<group>";
 		};
