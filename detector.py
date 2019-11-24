@@ -1,0 +1,130 @@
+import numpy as np
+import LORAparameters as LORA
+
+cable_delay=np.asarray([0,27,-49,-296,(-206-73+18),(-726-73+18),(-503-73+18),(-732-73+18),(-765),(-611+13),(-850+4),(106),(-116+5),(-314+0),(-528+34),(-499+20),(-1601+26),(-986+15),(-1198+20),(-1013+6)])
+
+
+
+
+class Detector:
+    def __init__(self, name):
+        self.name = name
+
+    x_cord=0
+    y_cord=0
+    z_cord=0
+
+    B_min=0
+    B_max=0
+    fArea12=0
+    err_fArea12=0
+    fArea23=0
+    err_fArea23=0
+    gain=0
+    number=0
+    
+    #information stored from root file
+    trigg_pattern=0
+    nsec=0
+    total_counts=0
+    counts=np.zeros([LORA.nTrace])
+    trigg_condition=0
+    ctd=0
+    pulse_width=0
+    gps=0
+    pulse_height=0
+    
+    # calculated times
+    cal_time=0
+    final_event_time=0
+    cdt=-1
+    
+    
+    
+    #information calculated here
+    trace_background=0
+    trace_rms=0
+    trace_int_counts=0
+    threshold_time=0   # unit of ns
+    event_time_stamp=0  #cal timestamp
+
+    density=0
+    err_density=0
+
+class Lasa:
+    def __init__(self, name):
+        self.name = name
+    # 3 for timestamp of event, 1 second after, 2 seconds after
+    GPS_time_stamp=np.zeros([3])
+    number=0
+    CTP=np.zeros([3])
+    sync=np.zeros([3])
+    quant=np.zeros([3])
+    YMD=np.zeros([3])
+    sec_flag=0
+
+
+def load_event_information(info,detectors):
+    #print info[0].keys()
+    for i in np.arange(len(detectors)):
+        detectors[i].number=i+1
+        detectors[i].trigg_pattern=info[i]['trigg_pattern']
+        detectors[i].nsec=info[i]['nsec']
+        detectors[i].counts=info[i]['counts']
+        detectors[i].trigg_condition=info[i]['trigg_condition']
+        detectors[i].ctd=info[i]['ctd']
+        detectors[i].pulse_width=info[i]['pulse_width']
+        detectors[i].gps=info[i]['gps']
+        detectors[i].total_counts=info[i]['total_counts']
+
+        detectors[i].pulse_height=info[i]['pulse_height']
+
+def load_sec_information(info0,info1,info2,lasas):
+    
+    for i in np.arange(len(lasas)):
+        lasas[i].number=i+1
+
+        if (info2[i]['GPS_time_stamp']!=info1[i]['GPS_time_stamp']+1) and (info1[i]['GPS_time_stamp']!=info0[i]['GPS_time_stamp']+1):
+            lasas[i].sec_flag=1
+        #lasas[i].CTP[0]=info0[i]['CTP']
+        #print info0[i]['CTP']
+        lasas[i].CTP=np.asarray([info0[i]['CTP'],info1[i]['CTP'],info2[i]['CTP']])
+        lasas[i].GPS_time_stamp=np.asarray([info0[i]['GPS_time_stamp'],info1[i]['GPS_time_stamp'],info2[i]['GPS_time_stamp']])
+        lasas[i].sync=np.asarray([info0[i]['sync'],info1[i]['sync'],info2[i]['sync']])
+        lasas[i].quant=np.asarray([info0[i]['quant'],info1[i]['quant'],info2[i]['quant']])
+        lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
+
+def load_positions(detectors):
+
+    file=open(LORA.det_cord_file,'r')
+    cordinates=np.genfromtxt(file,skip_header=2,usecols=(1,2,3))
+    file.close()
+    for i in np.arange(LORA.nDetA):
+        detectors[i].x_cord=cordinates[i][0]
+        detectors[i].y_cord=cordinates[i][1]
+        detectors[i].z_cord=cordinates[i][2]
+
+
+
+def load_signal(detectors):
+    
+    file=open(LORA.signal_retrieve_file,'r')
+    info=np.genfromtxt(file,skip_header=8,usecols=(1,2,3,4,5,6))
+    file.close()
+    for i in np.arange(LORA.nDetA):
+        detectors[i].fArea12=info[i][0]
+        detectors[i].err_fArea12=info[i][1]
+        detectors[i].fArea23=info[i][2]
+        detectors[i].err_fArea23=info[i][3]
+        detectors[i].B_min=info[i][4]
+        detectors[i].B_ax=info[i][5]
+
+def load_gain(detectors):
+    
+    file=open(LORA.gain_cal_file,'r')
+    info=np.genfromtxt(file,usecols=(1))
+    file.close()
+    for i in np.arange(LORA.nDetA):
+        detectors[i].gain=info[i]
+
+

@@ -8,10 +8,13 @@ import LORAparameters as LORA
 import process_functions as process
 import detector as det
 import event as event
+from pytz import timezone
+import ROOT
+
 
 data_dir='/Users/kmulrey/LOFAR/LORA/LORAraw/'
 LORA4times=np.genfromtxt(data_dir+'LORAtime4')
-
+outputdir='LORAnew/'
 
 detectors=[]
 lasas=[]
@@ -41,6 +44,7 @@ for t in np.arange(30,31):
     print '_____________________'
 
     print '{3}:    {0}   {1}:  {2}'.format(timestamp,ns_timestamp,tag,t)
+    
         #try:
     info=read.return_root(tag,timestamp,ns_timestamp,data_dir)
     sec_info0,sec_info1,sec_info2=read.return_second_data(tag,timestamp,ns_timestamp,data_dir)
@@ -69,14 +73,44 @@ for t in np.arange(30,31):
     for d in np.arange(LORA.nDetA):
         event.find_counts(detectors[d])
         event.get_arrival_time(detectors[d])
-        print 'getting timestamp for----> {0}  {1}'.format(d, int((detectors[d].number-1)/4))
+        #print 'getting timestamp for----> {0}  {1}'.format(d, int((detectors[d].number-1)/4))
         event.get_event_timestamp(detectors[d],lasas[int((detectors[d].number-1)/4)])
 
-    event.cal_event_timestamp(detectors,lasas[0])
-    event.cal_event_timestamp(detectors,lasas[1])
-    event.cal_event_timestamp(detectors,lasas[2])
-    event.cal_event_timestamp(detectors,lasas[3])
-    event.cal_event_timestamp(detectors,lasas[4])
+    for l in np.arange(LORA.nLasaA):
+        event.cal_event_timestamp(detectors,lasas[l])
+   
+
+    event.do_arrival_time_diff(detectors)
+    event.do_arrival_direction(detectors,ev)
+
+    event.do_COM_core(detectors,ev)
+    event.find_density(detectors,ev)
+
+    event.fit_arrival_direction(detectors,ev)
+#final event time
+# arrival time diff
+#  arrival direction
+
+    #make output file
+
+    '''
+    dt_object = datetime.utcfromtimestamp(timestamp)
+
+    year=dt_object.year
+    month=dt_object.month
+    day=dt_object.day
+    hour=dt_object.hour
+    minute=dt_object.minute
+    sec=dt_object.second
+
+
+
+    output_file=open(outputdir+'LORAdata-'+str(dt_object.year)+str(dt_object.month).zfill(2)+str(dt_object.day).zfill(2)+'T'+str(dt_object.hour).zfill(2)+str(dt_object.minute).zfill(2)+str(dt_object.second).zfill(2)+'.dat','w')
+    output_file.write('//UTC_Time(secs)\tnsecs\t\tCore(X)\t\tCore(Y)\t\tElevation\tAzimuth\t\tEnergy(eV)\tCoreE(X)\tCoreE(Y)\tMoliere_rad(m)\t\tElevaErr\tAziErr\tEnergyErr(eV)\tNe\t\tNeErr\t\tCorCoef_XY\t\tNe_RefA\t\tNeErr_RefA\t\tEnergy_RefA\t\tEnergyErr_RefA\n')
+
+
+    output_file.close()
+    '''
 
     #plot.plot_traces(detectors)
 
