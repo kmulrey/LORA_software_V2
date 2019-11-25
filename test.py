@@ -30,9 +30,12 @@ det.load_positions(detectors)
 det.load_signal(detectors)
 det.load_gain(detectors)
 
+#event.read_attenuation()
 
 
 for t in np.arange(30,31):
+    #for t in np.arange(30,30):
+
     timestamp = int(LORA4times[t][0])
     ns_timestamp = int(LORA4times[t][1])
     
@@ -87,6 +90,14 @@ for t in np.arange(30,31):
     event.find_density(detectors,ev)
 
     event.fit_arrival_direction(detectors,ev)
+    event.fit_NKG(detectors,ev)
+
+
+
+
+
+
+
 #final event time
 # arrival time diff
 #  arrival direction

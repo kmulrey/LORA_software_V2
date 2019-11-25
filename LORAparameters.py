@@ -30,6 +30,7 @@ err_b=0.02    #Error on "par_b"
 det_cord_file='data/Detector_Cord.dat'
 gain_cal_file='data/gain_calib.dat'
 signal_retrieve_file='data/signal_retrive.dat'
+atm_file='data/atmos_attenuation.dat'
 
 event_id_offset=1262304000
 
@@ -47,3 +48,31 @@ Det_Thres=4
 vel_light=2.99792458e8    #velocity of light in m/sec.
 Det_Area=0.9        #Detector collection area in m^2
 Density_Cut=1.0     #Considering only those detectors with density greater than this.
+Density_Cut_High=10000 #Upper density cut in particles/m^2: considering only detectors with density<=Rho_cut
+
+
+
+
+
+# fit values
+
+Age=1.7
+rM=30
+No_Bin_R=1600    # No. of bin for lateral density
+min_R=0        # Min. radius for ,,    ,,
+max_R=350        # Max    ,,    ,,    ,,
+
+#define    X0            1024    // Vertical atmos. thickness in g/cm^2
+#define    Ref_angle    21        // Reference zenith angle (deg.) for calculating atmos. attenuation
+
+par_a=1.23    # Eneregy reconstruction paramter (From Kickelbick 2008, Kascade thesis)
+par_b=0.95    #  ,,  ,,  ,,
+err_a=0.14    # Error on "par_a"
+err_b=0.02    # Error on "par_b"
+
+Bin_Size_X=1  # Bin size along X-axis for core distribution in meters
+Bin_Size_Y=1  # Bin size along Y-axis for ''    ''    ''    ''
+
+
+Ref_angle=21.0
+X0=1024    #Vertical atmos. thickness in g/cm^2
