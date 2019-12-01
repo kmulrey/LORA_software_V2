@@ -10,11 +10,25 @@ import detector as det
 import event as event
 from pytz import timezone
 import ROOT
+from optparse import OptionParser
+
+parser = OptionParser()
+parser.add_option('-e', '--event',type='int',help='line number of event',default=136950320)
+
+(options, args) = parser.parse_args()
+e=int(options.event)
+
 
 
 data_dir='/Users/kmulrey/LOFAR/LORA/LORAraw/'
+#data_dir='/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/'
 LORA4times=np.genfromtxt(data_dir+'LORAtime4')
+#LORA4times=np.genfromtxt('/vol/astro3/lofar/vhecr/lora_triggered/'+'LORAtime4')
+
 outputdir='LORAnew/'
+#outputdir='/vol/astro7/lofar/lora/LORA_V2/'
+
+
 
 detectors=[]
 lasas=[]
@@ -33,22 +47,44 @@ det.load_gain(detectors)
 #event.read_attenuation()
 
 
-for t in np.arange(30,31):
+
+LOFAR_id=str(e)
+timestamp=int(LOFAR_id)+LORA.event_id_offset
+#LOFAR_id=str(int(timestamp-LORA.event_id_offset))
+
+#print LORA4times.T[0]
+index=-1
+
+for i in np.arange(len(LORA4times)):
+    print int(LORA4times[i][0]), timestamp
+    if int(LORA4times[i][0])== timestamp:
+        index=i
+        continue
+
+if i>-1:
+    run=1
+else:
+    run=0
+
+for t in np.arange(run):
+    ns_timestamp = int(LORA4times[index][1])
+
+    #for i in np.arange(1):
+    #for t in np.arange(30,31):
     #for t in np.arange(30,30):
 
-    timestamp = int(LORA4times[t][0])
-    ns_timestamp = int(LORA4times[t][1])
+    #timestamp = int(LORA4times[t][0])
+    #ns_timestamp = int(LORA4times[t][1])
     
-    '''
-    LOFAR_id=str(int(timestamp-LORA.event_id_offset))
+    
+    #LOFAR_id=str(int(timestamp-LORA.event_id_offset))
     ev=event.Event(LOFAR_id,'V1')
     
     tag=read.find_tag(timestamp,ns_timestamp,data_dir)
     print '_____________________'
 
-    print '{3}:    {0}   {1}:  {2}'.format(timestamp,ns_timestamp,tag,t)
+    print '{2}:    {0}   {1}'.format(timestamp,ns_timestamp,tag)
     
-        #try:
     log_file_info=read.log_file(tag,data_dir)
     info=read.return_root(tag,timestamp,ns_timestamp,data_dir)
     sec_info0,sec_info1,sec_info2=read.return_second_data(tag,timestamp,ns_timestamp,data_dir)
@@ -63,15 +99,7 @@ for t in np.arange(30,31):
     lasa5_status=log_file_info['lasa5_status']
 
     print LOFAR_trig,lasa1_status,lasa2_status,lasa3_status,lasa4_status,lasa5_status
-    '''
-    '''
-    print '................'
-    print int(sec_info0[0]['GPS_time_stamp']),sec_info0[0]['sync'],sec_info0[0]['CTP'],sec_info0[0]['quant']
-    print int(sec_info1[0]['GPS_time_stamp']),sec_info1[0]['sync'],sec_info1[0]['CTP'],sec_info1[0]['quant']
-    print int(sec_info2[0]['GPS_time_stamp']),sec_info2[0]['sync'],sec_info2[0]['CTP'],sec_info2[0]['quant']
-    print '_____________________'
-    '''
-    '''
+
 
     if (sec_info0[0]['GPS_time_stamp']-info[0]['gps'])>1:
         print 'Can\'t find corresponding 1 Sec message: {0}  {1}'.format(int(info[0]['gps']),int(sec_info0[0]['GPS_time_stamp']))
@@ -137,7 +165,7 @@ for t in np.arange(30,31):
     output_file.close()
     
 
-    '''
+
 
 #plot.plot_traces(detectors)
 

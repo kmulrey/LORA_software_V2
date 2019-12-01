@@ -41,8 +41,8 @@ class Event:
     nsec_min=0
     energy=0
     energy_err=0
-    Mr=0
-    fit_elevation_Err=0
+    Rm=0
+    fit_elevation_err=0
     fit_phi_err=0
     Ne=0
     Ne_err=0
@@ -71,7 +71,8 @@ def find_counts(detector):
     background_rms=np.std(background)
     detector.trace_rms=background_rms
     detector.trace_mean=background_mean
-
+    detector.peak=np.max(detector.counts)
+    detector.corrected_threshold=detector.threshold-background_mean
     if background_rms<10.0:
         corrected=detector.counts-background_mean
         peak=np.max(corrected)
@@ -81,7 +82,16 @@ def find_counts(detector):
             BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
 
             total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
-            detector.trace_int_counts=total_count
+        detector.trace_int_counts=total_count
+
+        
+
+        #threshold=0
+        detector.corrected_peak=peak
+    #function=0
+
+
+
     #print '{0:.2f}  -> {1:.2f}  :   {2:0.2f}'.format(total_count, detector.total_counts,total_count/detector.total_counts)
 
 
@@ -295,6 +305,7 @@ def fit_arrival_direction(detectors,event):
     event.fit_phi=phi
     event.fit_elevation=90.0-theta
     event.fit_theta_err=err_theta
+    event.fit_elevation_err=err_theta
     event.fit_phi_err=err_phi
 
 
@@ -677,3 +688,34 @@ def fit_NKG(detectors,event):
 
     energy=np.power(Ne_fit,LORA.par_b)*np.power(10.0,LORA.par_a)*np.power(10.0,-6.0)# ; //Energy (PeV): Formula from KASCADE simulation (2008)
     err_energy=np.sqrt(np.power(np.log(10)*LORA.err_a,2)+np.power(np.log10(Ne_fit)*LORA.err_b,2)+np.power(LORA.par_b*Ne_fit_err/Ne_fit,2))*energy #;    //error on energy
+
+    
+    #find first time stamp
+    min_utc=1e10
+    min_nsec=1e10
+    for i in np.arange(LORA.nDetA):
+        if detectors[i].gps>1 and detectors[i].cal_time>1:
+            if detectors[i].gps<min_utc:
+                min_utc=detectors[i].gps
+            if detectors[i].cal_time<min_nsec:
+                min_nsec=detectors[i].cal_time
+
+    # assign event values
+    event.x_core=x_core_ground
+    event.y_core=y_core_ground
+    event.x_core_err=x_core_fit_err
+    event.y_core_err=y_core_fit_err
+    event.z_core=0
+    event.UTC_min=min_utc
+    event.nsec_min=min_nsec
+    event.energy= energy
+    event.energy_err=err_energy
+    event.Rm=rM_fit
+    event.Ne=Ne_fit
+    event.Ne_err=Ne_fit_err
+    event.CorCoef_xy=corr_coef_xy
+    event.Ne_RefA=size_Ref
+    event.NeErr_RefA=err_size_Ref
+    event.Energy_RefA=energy_Ref
+    event.EnergyErr_RefA=err_energy_Ref
+

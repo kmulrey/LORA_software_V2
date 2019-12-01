@@ -16,6 +16,7 @@
 		4148787B23759F3400C2FC19 /* event_time.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = event_time.py; sourceTree = "<group>"; };
 		4148787C2375D03500C2FC19 /* detector.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = detector.py; sourceTree = "<group>"; };
 		4148787D2375D76F00C2FC19 /* event.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = event.py; sourceTree = "<group>"; };
+		4192C0FB2394510100A586F7 /* LORA_by_event.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LORA_by_event.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -24,6 +25,7 @@
 			children = (
 				414878752373439100C2FC19 /* README */,
 				41487876237433D500C2FC19 /* test.py */,
+				4192C0FB2394510100A586F7 /* LORA_by_event.py */,
 				4148787D2375D76F00C2FC19 /* event.py */,
 				4148787C2375D03500C2FC19 /* detector.py */,
 				4148787823756AFA00C2FC19 /* plot_functions.py */,

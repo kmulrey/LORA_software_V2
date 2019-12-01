@@ -33,12 +33,13 @@ class Detector:
     pulse_width=0
     gps=0
     pulse_height=0
-    
+    trig=0
     # calculated times
     cal_time=0
     final_event_time=0
     cdt=-1
-    
+    sec_mean=0
+    sec_sigma=0
     
     
     #information calculated here
@@ -47,7 +48,12 @@ class Detector:
     trace_int_counts=0
     threshold_time=0   # unit of ns
     event_time_stamp=0  #cal timestamp
-
+    threshold=0
+    corrected_peak=0
+    function=0
+    peak=0
+    correted_threshold=0
+    
     density=0
     err_density=0
 
@@ -78,6 +84,18 @@ def load_event_information(info,detectors):
         detectors[i].total_counts=info[i]['total_counts']
 
         detectors[i].pulse_height=info[i]['pulse_height']
+
+    for i in np.arange(5):
+        m1=int(detectors[i*4].trigg_pattern)>>0&1
+        m2=int(detectors[i*4].trigg_pattern)>>2&1
+        s1=int(detectors[i*4].trigg_pattern)>>4&1
+        s2=int(detectors[i*4].trigg_pattern)>>6&1
+
+        detectors[i*4+0].trig=m1
+        detectors[i*4+1].trig=m2
+        detectors[i*4+2].trig=s1
+        detectors[i*4+3].trig=s2
+
 
 def load_sec_information(info0,info1,info2,lasas):
     
@@ -126,5 +144,19 @@ def load_gain(detectors):
     file.close()
     for i in np.arange(LORA.nDetA):
         detectors[i].gain=info[i]
+
+
+
+def load_log_information(info,detectors):
+    #print info[0].keys()
+    for i in np.arange(len(detectors)):
+        detectors[i].threshold=info[i]['threshold']/0.48
+
+
+def load_noise_information(info,detectors):
+    #print info[0].keys()
+    for i in np.arange(len(detectors)):
+        detectors[i].sec_mean=info[i]['mean']
+        detectors[i].sec_sigma=info[i]['sigma']
 
 

@@ -30,8 +30,8 @@ def plot_traces(detectors):
     ax3.set_xticks([], [])
     ax4.set_xticks([], [])
 
-    x=time[int(detectors[0].threshold_time/2.5)]
-    y= detectors[0].counts[int(detectors[0].threshold_time/2.5)],
+    #x=time[int(detectors[0].threshold_time/2.5)]
+    #y= detectors[0].counts[int(detectors[0].threshold_time/2.5)],
     for i in np.arange(LORA.nDet):
         ax1.plot(time,detectors[0+i].counts)
         #ax1.plot(time[int(detectors[0+i].threshold_time/2.5)],detectors[0+i].counts[int(detectors[0+i].threshold_time/2.5)],'o')
@@ -39,10 +39,11 @@ def plot_traces(detectors):
         ax3.plot(time,detectors[8+i].counts)
         ax4.plot(time,detectors[12+i].counts)
         ax5.plot(time,detectors[16+i].counts)
+        
     
 
     
-    ax1.plot(x,y,'o')
+    #ax1.plot(x,y,'o')
 
     
     ax1.set_ylabel('ADC')
