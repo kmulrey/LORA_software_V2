@@ -134,7 +134,7 @@ def load_sec_information(info0,info1,info2,lasas,V):
         
             lasas[i].number=i+1
 
-            print [info0[i]['CTP_S'],[info1[i]['CTP_S'],[info2[i]['CTP_S']]
+            print info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']
     
             if (info2[i]['GPS_time_stamp_M']!=info1[i]['GPS_time_stamp_M']+1) and (info1[i]['GPS_time_stamp_M']!=info0[i]['GPS_time_stamp_M']+1):
                 lasas[i].sec_flag=1
