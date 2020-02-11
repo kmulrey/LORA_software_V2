@@ -134,31 +134,7 @@ def load_sec_information(info0,info1,info2,lasas,V):
         
             lasas[i].number=i+1
 
-            if info0[i]['CTP_S']<1 or info1[i]['CTP_S']<1 or info2[i]['CTP_S']<1:
-                info0[i]['GPS_time_stamp_M']=np.asarray([0])
-                info1[i]['GPS_time_stamp_M']=np.asarray([0])
-                info2[i]['GPS_time_stamp_M']=np.asarray([0])
-                info0[i]['GPS_time_stamp_S']=np.asarray([0])
-                info1[i]['GPS_time_stamp_S']=np.asarray([0])
-                info2[i]['GPS_time_stamp_S']=np.asarray([0])
-                info0[i]['CTP_S']=np.asarray([0])
-                info1[i]['CTP_S']=np.asarray([0])
-                info2[i]['CTP_S']=np.asarray([0])
-                info0[i]['CTP_M']=np.asarray([0])
-                info1[i]['CTP_M']=np.asarray([0])
-                info2[i]['CTP_M']=np.asarray([0])
-                info0[i]['sync_M']=np.asarray([0])
-                info1[i]['sync_M']=np.asarray([0])
-                info2[i]['sync_M']=np.asarray([0])
-                info0[i]['sync_S']=np.asarray([0])
-                info1[i]['sync_S']=np.asarray([0])
-                info2[i]['sync_S']=np.asarray([0])
-                info0[i]['quant_M']=np.asarray([0])
-                info1[i]['quant_M']=np.asarray([0])
-                info2[i]['quant_M']=np.asarray([0])
-                info0[i]['quant_S']=np.asarray([0])
-                info1[i]['quant_S']=np.asarray([0])
-                info2[i]['quant_S']=np.asarray([0])
+
                 
                 
             print info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']
