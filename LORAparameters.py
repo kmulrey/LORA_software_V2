@@ -26,10 +26,15 @@ par_b=0.95    #  ,,  ,,  ,,
 err_a=0.14    #Error on "par_a"
 err_b=0.02    #Error on "par_b"
 
-det_cord_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/Detector_Cord.dat'
-gain_cal_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/gain_calib.dat'
-signal_retrieve_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/signal_retrive.dat'
-atm_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/atmos_attenuation.dat'
+#det_cord_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/Detector_Cord.dat'
+#gain_cal_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/gain_calib.dat'
+##signal_retrieve_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/signal_retrive.dat'
+#atm_file='/Users/kmulrey/LOFAR/LORA/LORAprocessing/newLORA_processing/LORA_software_V2/data/atmos_attenuation.dat'
+
+det_cord_file='/vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2/data/Detector_Cord.dat'
+gain_cal_file='/vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2/data/gain_calib.dat'
+signal_retrieve_file='/vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2/data/signal_retrive.dat'
+atm_file='/vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2/data/atmos_attenuation.dat'
 
 event_id_offset=1262304000
 
