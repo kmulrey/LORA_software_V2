@@ -647,6 +647,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
             syncM= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
             quantM= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
             ctpM= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
+            print gpsM
             timestamp = date.fromtimestamp(gpsM)
             ymdM=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
             #slave
