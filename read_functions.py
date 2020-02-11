@@ -599,6 +599,9 @@ def return_event_V2(event_id,event_GPS, event_ns,event_data):
     #print counts.shape
     all_info=[]
     log_all_info=[]
+    
+    print nsec
+    print pulse_height
 
     for d in np.arange(LORA.nLORA):
         if (d+1) in dets:
@@ -648,7 +651,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
                 syncM= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
                 quantM= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
                 ctpM= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
-                print gpsM
+                #print gpsM
                 timestamp = date.fromtimestamp(gpsM)
                 ymdM=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
                 #slave
@@ -660,7 +663,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
                 ymdS=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
         
         
-                print gpsM,syncM,ctpM
+                #print gpsM,syncM,ctpM
                 
                 info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
             else:
