@@ -661,7 +661,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
     
             info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
             else:
-            {'lasa':lasa,'YMD_M':0,'GPS_time_stamp_M':0,'sync_M':0,'CTP_M':0,'quant_M':0,'YMD_S':0,'GPS_time_stamp_S':0,'sync_S':0,'CTP_S':0,'quant_S':0}
+                {'lasa':lasa,'YMD_M':0,'GPS_time_stamp_M':0,'sync_M':0,'CTP_M':0,'quant_M':0,'YMD_S':0,'GPS_time_stamp_S':0,'sync_S':0,'CTP_S':0,'quant_S':0}
             
             if t==0:
                 all_info.append(info)
