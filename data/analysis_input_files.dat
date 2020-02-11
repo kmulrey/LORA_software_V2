@@ -1,0 +1,5 @@
+//List of event files to read 
+//Path 	 File name
+/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/	20190901_075800.root 
+/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/	20190901_230000.root 
+/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/	20190902_080407.root 
