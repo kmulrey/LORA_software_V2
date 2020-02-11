@@ -67,7 +67,23 @@ class Lasa:
     sync=np.zeros([3])
     quant=np.zeros([3])
     YMD=np.zeros([3])
+    
     sec_flag=0
+    
+    GPS_time_stamp_M=np.zeros([3])
+    number_M=0
+    CTP_M=np.zeros([3])
+    sync_M=np.zeros([3])
+    quant_M=np.zeros([3])
+    YMD_M=np.zeros([3])
+
+
+    GPS_time_stamp_S=np.zeros([3])
+    number_S=0
+    CTP_S=np.zeros([3])
+    sync_S=np.zeros([3])
+    quant_S=np.zeros([3])
+    YMD_S=np.zeros([3])
 
 
 def load_event_information(info,detectors):
@@ -97,23 +113,50 @@ def load_event_information(info,detectors):
         detectors[i*4+3].trig=s2
 
 
-def load_sec_information(info0,info1,info2,lasas):
-    
-    for i in np.arange(len(lasas)):
-        lasas[i].number=i+1
+def load_sec_information(info0,info1,info2,lasas,V):
+    if V=='V1':
+        for i in np.arange(len(lasas)):
+            lasas[i].number=i+1
 
-        if (info2[i]['GPS_time_stamp']!=info1[i]['GPS_time_stamp']+1) and (info1[i]['GPS_time_stamp']!=info0[i]['GPS_time_stamp']+1):
-            lasas[i].sec_flag=1
-        #lasas[i].CTP[0]=info0[i]['CTP']
-        #print info0[i]['CTP']
-        lasas[i].CTP=np.asarray([info0[i]['CTP'],info1[i]['CTP'],info2[i]['CTP']])
-        lasas[i].GPS_time_stamp=np.asarray([info0[i]['GPS_time_stamp'],info1[i]['GPS_time_stamp'],info2[i]['GPS_time_stamp']])
-        lasas[i].sync=np.asarray([info0[i]['sync'],info1[i]['sync'],info2[i]['sync']])
-        lasas[i].quant=np.asarray([info0[i]['quant'],info1[i]['quant'],info2[i]['quant']])
-        lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
+            if (info2[i]['GPS_time_stamp']!=info1[i]['GPS_time_stamp']+1) and (info1[i]['GPS_time_stamp']!=info0[i]['GPS_time_stamp']+1):
+                lasas[i].sec_flag=1
+      
+            lasas[i].CTP=np.asarray([info0[i]['CTP'],info1[i]['CTP'],info2[i]['CTP']])
+            lasas[i].GPS_time_stamp=np.asarray([info0[i]['GPS_time_stamp'],info1[i]['GPS_time_stamp'],info2[i]['GPS_time_stamp']])
+            lasas[i].sync=np.asarray([info0[i]['sync'],info1[i]['sync'],info2[i]['sync']])
+            lasas[i].quant=np.asarray([info0[i]['quant'],info1[i]['quant'],info2[i]['quant']])
+            lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
+
+    if V=='V2':
+        for i in np.arange(len(lasas)):
+            lasas[i].number=i+1
+
+            if (info2[i]['GPS_time_stamp_M']!=info1[i]['GPS_time_stamp_M']+1) and (info1[i]['GPS_time_stamp_M']!=info0[i]['GPS_time_stamp_M']+1):
+                lasas[i].sec_flag=1
+      
+            lasas[i].CTP_M=np.asarray([info0[i]['CTP_M'],info1[i]['CTP_M'],info2[i]['CTP_M']])
+            lasas[i].CTP_S=np.asarray([info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']])
+
+            lasas[i].GPS_time_stamp_M=np.asarray([info0[i]['GPS_time_stamp_M'],info1[i]['GPS_time_stamp_M'],info2[i]['GPS_time_stamp_M']])
+            lasas[i].GPS_time_stamp_S=np.asarray([info0[i]['GPS_time_stamp_S'],info1[i]['GPS_time_stamp_S'],info2[i]['GPS_time_stamp_S']])
+            
+            lasas[i].sync_M=np.asarray([info0[i]['sync_M'],info1[i]['sync_M'],info2[i]['sync_M']])
+            lasas[i].sync_S=np.asarray([info0[i]['sync_S'],info1[i]['sync_S'],info2[i]['sync_S']])
+
+            lasas[i].quant_M=np.asarray([info0[i]['quant_M'],info1[i]['quant_M'],info2[i]['quant_M']])
+            lasas[i].quant_S=np.asarray([info0[i]['quant_S'],info1[i]['quant_S'],info2[i]['quant_S']])
+
+            lasas[i].YMD_M=np.asarray([info0[i]['YMD_M'],info1[i]['YMD_M'],info2[i]['YMD_M']])
+            lasas[i].YMD_S=np.asarray([info0[i]['YMD_S'],info1[i]['YMD_S'],info2[i]['YMD_S']])
+
+
+
+
+
+
+
 
 def load_positions(detectors):
-
     file=open(LORA.det_cord_file,'r')
     cordinates=np.genfromtxt(file,skip_header=2,usecols=(1,2,3))
     file.close()

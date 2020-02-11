@@ -3,6 +3,8 @@ from datetime import datetime
 import os
 import ROOT
 import LORAparameters as LORA
+import os.path
+from datetime import date
 
 nTraceV1=4000
 nDetV1=20
@@ -25,15 +27,41 @@ def find_tag(timestamp,ns_timestamp,data_dir):
     
     #print year,month,day,hour
     #print int(timestamp),int(ns_timestamp)
+    print 'day:    ',day
+    print 'month:    ',month
+    print 'year:    ',year
+
+    filestr1= str(year)+str(month).zfill(2)+str(day).zfill(2)
+    filestr3='-1'
+    filestr4='-1'
     
-    filestr1= str(year)+str(month).zfill(2)+str(day-1).zfill(2)
-    filestr2= str(year)+str(month).zfill(2)+str(day).zfill(2)
+    if day>1:
+        filestr2= str(year)+str(month).zfill(2)+str(day-1).zfill(2)
+        filestr4= str(year)+str(month).zfill(2)+str(day-2).zfill(2)
+    
+    if (month==10 or month==5 or month==7 or month==12) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(30).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(29).zfill(2)
+    
+    if (month==2 or month==4 or month==6 or month==8 or month==9 or month==11) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(31).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(30).zfill(2)
+    
+    if (month==3) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(28).zfill(2)
+        filestr3= str(year)+str(month-1).zfill(2)+str(29).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(27).zfill(2)
+    
+    if (month==1) and day==1:
+        filestr2= str(year-1)+str(12).zfill(2)+str(31).zfill(2)
+        filestr4= str(year-1)+str(12).zfill(2)+str(30).zfill(2)
+
     #filestr3= str(year)+str(month).zfill(2)+str(day-1).zfill(2)
     
     filelist=[]
     
     for file in os.listdir(data_dir):
-        if filestr1 in file or filestr2 in file:
+        if filestr1 in file or filestr2 in file or filestr3 in file or filestr4 in file:
             if '.log' in file:
                 #print(os.path.join(data_dir, file))
                 filelist.append(os.path.join(data_dir, file))
@@ -46,19 +74,107 @@ def find_tag(timestamp,ns_timestamp,data_dir):
         #print filelist[i]
         #for i in np.arange(1):
         file=open(filelist[i])
-        stamps=np.genfromtxt(file,skip_header=10,usecols=(2,3))
+        stamps=[]
+        try:
+            stamps=np.genfromtxt(file,skip_header=10,usecols=(2,3))
+        except:
+            print 'empty log'
         file.close()
-        if len(stamps>0):
+
+        if len(stamps)>0:
             if len(stamps[(stamps.T[0]==timestamp)*(stamps.T[1]==ns_timestamp)])>0:
                 
                 filetag=filelist[i].split('raw/')[1].split('.')[0]
                 found=1
 
-    if found==1:
+
+    #print 'looking for this file: ',data_dir+filetag+'.root'
+
+    if found==1 and os.path.exists(data_dir+filetag+'.root'):
         return filetag
     else:
         return 'no_match'
 
+def find_tag_exception(timestamp,ns_timestamp,data_dir):
+    #print '\n________________________\n'
+    #timestamp = LORA4times[t][0]
+    #ns_timestamp = LORA4times[t][1]
+    
+    print 'no standard log file avaliable, trying to look at .root files'
+    
+    dt_object = datetime.fromtimestamp(timestamp)
+    year=dt_object.year
+    month=dt_object.month
+    day=dt_object.day
+    hour=dt_object.hour
+    minute=dt_object.minute
+    second=dt_object.second
+    
+    #print year,month,day,hour
+    #print int(timestamp),int(ns_timestamp)
+    filestr1= str(year)+str(month).zfill(2)+str(day).zfill(2)
+    filestr3='-1'
+    filestr4='-1'
+    
+    if day>1:
+        filestr2= str(year)+str(month).zfill(2)+str(day-1).zfill(2)
+        filestr4= str(year)+str(month).zfill(2)+str(day-2).zfill(2)
+
+    if (month==10 or month==5 or month==7 or month==12) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(30).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(29).zfill(2)
+
+    if (month==2 or month==4 or month==6 or month==8 or month==9 or month==11) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(31).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(30).zfill(2)
+
+    if (month==3) and day==1:
+        filestr2= str(year)+str(month-1).zfill(2)+str(28).zfill(2)
+        filestr3= str(year)+str(month-1).zfill(2)+str(29).zfill(2)
+        filestr4= str(year)+str(month-1).zfill(2)+str(27).zfill(2)
+
+    if (month==1) and day==1:
+        filestr2= str(year-1)+str(12).zfill(2)+str(31).zfill(2)
+        filestr4= str(year-1)+str(12).zfill(2)+str(30).zfill(2)
+
+
+
+
+    filelist=[]
+    
+    for file in os.listdir(data_dir):
+        if filestr1 in file or filestr2 in file or filestr3 in file or filestr4 in file:
+            if '.root' in file:
+                #print(os.path.join(data_dir, file))
+                filelist.append(os.path.join(data_dir, file))
+    print filelist
+    
+    found=0
+    filetag='no'
+    
+    for i in np.arange(len(filelist)):
+        root_file=ROOT.TFile.Open(filelist[i])
+        tree_event = root_file.Get("Tree_event")
+        
+        
+        
+        event_index=-1
+        event_index=find_entry_number(timestamp,ns_timestamp,tree_event)
+        print 'did we find the index?   {0}'.format(event_index)
+        if event_index>-1:
+            found=1
+            filetag=filelist[i].split('raw/')[1].split('.')[0]
+            break
+
+
+    if found==1:
+        print 'returning file tag'
+        return filetag
+    
+    else:
+        return 'no_match'
+
+    
 def getTime(det, entry):
     det.GetEntry(entry)
     ymd=det.GetLeaf('YMD').GetValue()
@@ -138,7 +254,7 @@ def getDataV1(det, entry):
 
 def return_root(filename,utc,nsec,data_dir):
 
-    log_file=open(data_dir+filename+'.log','r')
+    #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
     
     tree_sec = root_file.Get("Tree_sec")
@@ -231,7 +347,7 @@ def getSecV1(det, entry):
 
 def return_second_data(filename,utc,nsec,data_dir):
 
-    log_file=open(data_dir+filename+'.log','r')
+    #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
     tree_sec = root_file.Get("Tree_sec")
     tree_event = root_file.Get("Tree_event")
@@ -328,7 +444,7 @@ def find_log_number(lora_utc,tree_log,d):
 
 def return_log_data(filename,utc,nsec,data_dir):
     
-    log_file=open(data_dir+filename+'.log','r')
+    #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
     tree_sec = root_file.Get("Tree_sec")
     tree_event = root_file.Get("Tree_event")
@@ -367,7 +483,7 @@ def return_log_data(filename,utc,nsec,data_dir):
 
 def return_noise_data(filename,utc,nsec,data_dir):
     
-    log_file=open(data_dir+filename+'.log','r')
+    #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
     tree_sec = root_file.Get("Tree_sec")
     tree_event = root_file.Get("Tree_event")
@@ -404,36 +520,37 @@ def return_noise_data(filename,utc,nsec,data_dir):
 def log_file(filename,data_dir):
     filepath=data_dir+filename+'.log'
     #log_file=open(data_dir+filename+'.log','r')
-    lasa1_status=0
-    lasa2_status=0
-    lasa3_status=0
-    lasa4_status=0
-    lasa5_status=0
-    LOFAR_trig=0
-
-    with open(filepath,'r') as fp:
-        line = fp.readline()
-        cnt = 1
-        while line:
-            #print("Line {}: {}".format(cnt, line.strip()))
-            if 'LOFAR trigger settings' in line:
-                LOFAR_trig=int(line.strip().split(':')[1])
-            
-            if 'CS003:' in line:
-                lasa1_status=int(line.strip().split(':')[1])
-            if 'CS004:' in line:
-                lasa2_status=int(line.strip().split(':')[1])
-            if 'CS005:' in line:
-                lasa3_status=int(line.strip().split(':')[1])
-            if 'CS006:' in line:
-                lasa4_status=int(line.strip().split(':')[1])
-            if 'CS007:' in line:
-                lasa5_status=int(line.strip().split(':')[1])
-            
+    lasa1_status=-1
+    lasa2_status=-1
+    lasa3_status=-1
+    lasa4_status=-1
+    lasa5_status=-1
+    LOFAR_trig=-1
+    try:
+        with open(filepath,'r') as fp:
             line = fp.readline()
-            cnt += 1
+            cnt = 1
+            while line:
+            #print("Line {}: {}".format(cnt, line.strip()))
+                if 'LOFAR trigger settings' in line:
+                    LOFAR_trig=int(line.strip().split(':')[1])
+            
+                if 'CS003:' in line:
+                    lasa1_status=int(line.strip().split(':')[1])
+                if 'CS004:' in line:
+                        lasa2_status=int(line.strip().split(':')[1])
+                if 'CS005:' in line:
+                            lasa3_status=int(line.strip().split(':')[1])
+                if 'CS006:' in line:
+                    lasa4_status=int(line.strip().split(':')[1])
+                if 'CS007:' in line:
+                    lasa5_status=int(line.strip().split(':')[1])
+            
+                line = fp.readline()
+                cnt += 1
 
-
+    except:
+        print 'can\'t find log file'
     '''
     print 'LOFAR trigger: ',LOFAR_trig
     print 'lasa 1: ',lasa1_status
@@ -444,3 +561,109 @@ def log_file(filename,data_dir):
     '''
     info={'LOFAR_trig':LOFAR_trig,'lasa1_status':lasa1_status,'lasa2_status':lasa2_status,'lasa3_status':lasa3_status,'lasa4_status':lasa4_status,'lasa5_status':lasa5_status}
     return info
+
+
+
+
+
+
+def return_event_V2(event_id,event_GPS, event_ns,event_data):
+
+    Station=event_data.item()['Station']
+    Detector=event_data.item()['Detector']
+    Channel_Passed_Threshold=event_data.item()['Channel_Passed_Threshold']
+    Trigg_Threshold=event_data.item()['Trigg_Threshold']
+    Charge_Corrected=event_data.item()['Charge_Corrected']
+    Peak_Height_Corrected=event_data.item()['Peak_Height_Corrected']
+    Peak_Height_Raw=event_data.item()['Peak_Height_Raw']
+    Waveform_Raw=event_data.item()['Waveform_Raw']
+    Event_Id=event_data.item()['Event_Id']
+    Run_Id=event_data.item()['Run_Id']
+    GPS_Time_Stamp=event_data.item()['GPS_Time_Stamp']
+    CTD=event_data.item()['CTD']
+    nsec_Online=event_data.item()['nsec_Online']
+    HiSparc_Trigg_Pattern=event_data.item()['HiSparc_Trigg_Pattern']
+    HiSparc_Trigg_Condition=event_data.item()['HiSparc_Trigg_Condition']
+
+
+    dets=Detector[Event_Id==event_id]
+    counts=Waveform_Raw[Event_Id==event_id]
+    pulse_height=Peak_Height_Corrected[Event_Id==event_id]
+    total_counts=Charge_Corrected[Event_Id==event_id]
+    trigger_pattern=HiSparc_Trigg_Pattern[Event_Id==event_id]
+    trigger_condition=HiSparc_Trigg_Condition[Event_Id==event_id]
+    nsec=nsec_Online[Event_Id==event_id]
+    ctd=CTD[Event_Id==event_id]
+    gps=GPS_Time_Stamp[Event_Id==event_id]
+    thresh=Trigg_Threshold[Event_Id==event_id]
+    #print counts.shape
+    all_info=[]
+    log_all_info=[]
+
+    for d in np.arange(LORA.nLORA):
+        if (d+1) in dets:
+            ind=np.where(dets==(d+1))[0][0]
+            #print d+1, dets[ind], total_counts[ind]
+            timestamp = date.fromtimestamp(gps[ind])
+            ymd=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
+            info={'det':dets[ind],'ymd':ymd,'gps':gps[ind],'ctd':ctd[ind],'nsec':nsec[ind],'trigg_condition':trigger_condition[ind],'trigg_pattern':trigger_pattern[ind],'total_counts':total_counts[ind],'pulse_height':pulse_height[ind],'pulse_width':0,'counts':counts[ind]}
+            log_info={'threshold':thresh[ind]}
+            all_info.append(info)
+            log_all_info.append(log_info)
+        else:
+            info={'det':d+1,'ymd':0,'gps':0,'ctd':0,'nsec':0,'trigg_condition':0,'trigg_pattern':0,'total_counts':0,'pulse_height':0,'pulse_width':0,'counts':np.zeros([4000])}
+            log_info={'threshold':0}
+
+            all_info.append(info)
+            log_all_info.append(log_info)
+
+
+
+    return all_info,log_all_info
+
+
+
+def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
+
+
+    Station=osm_data.item()['Station']
+    Master_Or_Slave=osm_data.item()['Master_Or_Slave']
+    GPS_Time_Stamp=osm_data.item()['GPS_Time_Stamp']
+    Sync_Error=osm_data.item()['Sync_Error']
+    Quant_Error=osm_data.item()['Quant_Error']
+    CTP=osm_data.item()['CTP']
+
+    all_info=[]
+    all_info1=[]
+    all_info2=[]
+
+    for t in np.arange(3):
+        #for i in np.arange(1):
+        for i in np.arange(LORA.nLASA):
+            lasa=i+1
+            #master
+            #print 'getting OSM for {0}'.format(i+1)
+            gpsM= GPS_Time_Stamp[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
+            syncM= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
+            quantM= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
+            ctpM= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
+            timestamp = date.fromtimestamp(gpsM)
+            ymdM=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
+            #slave
+            gpsS= GPS_Time_Stamp[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
+            syncS= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
+            quantS= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
+            ctpS= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
+            timestamp = date.fromtimestamp(gpsM)
+            ymdS=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
+    
+            info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
+    
+            if t==0:
+                all_info.append(info)
+            if t==1:
+                all_info1.append(info)
+            if t==2:
+                all_info2.append(info)
+
+    return all_info,all_info1,all_info2

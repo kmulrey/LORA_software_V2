@@ -72,7 +72,12 @@ def find_counts(detector):
     detector.trace_rms=background_rms
     detector.trace_mean=background_mean
     detector.peak=np.max(detector.counts)
-    detector.corrected_threshold=detector.threshold-background_mean
+    
+    if(background_mean<100 and background_mean>0):
+        detector.corrected_threshold=detector.threshold-background_mean
+    else:
+        detector.corrected_threshold=detector.threshold-detector.sec_mean
+
     if background_rms<10.0:
         corrected=detector.counts-background_mean
         peak=np.max(corrected)
@@ -82,8 +87,14 @@ def find_counts(detector):
             BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
 
             total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
-        detector.trace_int_counts=total_count
+        else:
+            total_count=0
+            BIN_S=int(max_bin-detector.B_min) # start integration
+            BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
+            total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
 
+        detector.trace_int_counts=total_count
+        
         
 
         #threshold=0
@@ -115,7 +126,22 @@ def get_event_timestamp(detector,lasa):
     
     if lasa.sec_flag!=1 and lasa.CTP[1]>0:
         detector.event_time_stamp=10*int((lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2])))
+        
+def get_event_timestamp_V2(detector,lasa):
+    
+    #print detector.number, detector.number%2
+    if detector.number%2==1:
+        if lasa.sec_flag!=1 and lasa.CTP_M[1]>0:
+            detector.event_time_stamp=10*int((lasa.sync_M[0]+lasa.quant_M[1]+(1.0*detector.ctd/lasa.CTP_M[1])*(1000000000.0-lasa.quant_M[1]+lasa.quant_M[2])))
+        else:
+            detector.event_time_stamp=detector.nsec
+        
+    if detector.number%2==0:
+        if lasa.sec_flag!=1 and lasa.CTP_S[1]>0:
+            detector.event_time_stamp=10*int((lasa.sync_S[0]+lasa.quant_S[1]+(1.0*detector.ctd/lasa.CTP_S[1])*(1000000000.0-lasa.quant_S[1]+lasa.quant_S[2])))
 
+        else:
+            detector.event_time_stamp=detector.nsec
 
 def cal_event_timestamp(detectors,lasa):
     #print '_____________________________________'
@@ -129,11 +155,15 @@ def cal_event_timestamp(detectors,lasa):
     args=np.argsort(thresh_use)
     #print int(args[detectors[0].trigg_condition]-1)
     if len(thresh_use)>1:
-        #print 'sorted: {0}'.format(np.sort(thresh_use))
-        #print thresh_use
-        #print args
+        print 'trigger condition: ',trigg_cond
+        print 'sorted: {0}'.format(np.sort(thresh_use))
+        print thresh_use
+        print args
         #print 'use index: {0}'.format(args[int(trigg_cond)-1])
-        trigg_time=thresh_use[args[int(trigg_cond)-1]]
+        try:
+            trigg_time=thresh_use[args[int(trigg_cond)-1]]
+        except: #this is in here becasue in a few case the length of thresh_use was less than trigg. condition
+            trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
         #print thresh_times,trigg_time
 
         for i in np.arange(4):

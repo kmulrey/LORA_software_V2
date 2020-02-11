@@ -19,13 +19,24 @@ outputdir='LORAnew/'
 detectors=[]
 lasas=[]
 
+'''
 for i in np.arange(LORA.nDetA):
     detectors.append(det.Detector('Det'+(str(i+1))))
 
 lasas=[]
 for i in np.arange(LORA.nLasaA):
     lasas.append(det.Lasa('Lasa'+(str(i+1))))
-                                  
+    
+    
+'''
+
+for i in np.arange(LORA.nDetB):
+    detectors.append(det.Detector('Det'+(str(i+1))))
+
+lasas=[]
+for i in np.arange(LORA.nLasaB):
+    lasas.append(det.Lasa('Lasa'+(str(i+1))))
+
 det.load_positions(detectors)
 det.load_signal(detectors)
 det.load_gain(detectors)
@@ -33,13 +44,54 @@ det.load_gain(detectors)
 #event.read_attenuation()
 
 
-for t in np.arange(30,31):
-    #for t in np.arange(30,30):
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#for t in np.arange(30,31):
+for t in np.arange(30,30):
+    '''
     timestamp = int(LORA4times[t][0])
     ns_timestamp = int(LORA4times[t][1])
     
-    '''
+    
     LOFAR_id=str(int(timestamp-LORA.event_id_offset))
     ev=event.Event(LOFAR_id,'V1')
     
