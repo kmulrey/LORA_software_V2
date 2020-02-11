@@ -658,10 +658,13 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
                 ctpS= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
                 timestamp = date.fromtimestamp(gpsM)
                 ymdS=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
-    
+        
+        
+                print gpsM,syncM,ctpM
+                
                 info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
             else:
-                info={'lasa':lasa,'YMD_M':0,'GPS_time_stamp_M':0,'sync_M':0,'CTP_M':0,'quant_M':0,'YMD_S':0,'GPS_time_stamp_S':0,'sync_S':0,'CTP_S':0,'quant_S':0}
+                info={'lasa':lasa,'YMD_M':[0],'GPS_time_stamp_M':[0],'sync_M':[0],'CTP_M':[0],'quant_M':[0],'YMD_S':[0],'GPS_time_stamp_S':[0],'sync_S':[0],'CTP_S':[0],'quant_S':[0]}
             
             if t==0:
                 all_info.append(info)
