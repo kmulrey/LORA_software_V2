@@ -134,7 +134,10 @@ def load_sec_information(info0,info1,info2,lasas,V):
         
             lasas[i].number=i+1
 
-            #if info0[i]['CTP_S']<1 or info1[i]['CTP_S']<1 or info2[i]['CTP_S']<1
+            if info0[i]['CTP_S']<1 or info1[i]['CTP_S']<1 or info2[i]['CTP_S']<1:
+                info0[i]['CTP_S']=0
+                info1[i]['CTP_S']=0
+                info2[i]['CTP_S']=0
             print info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']
     
             if (info2[i]['GPS_time_stamp_M']!=info1[i]['GPS_time_stamp_M']+1) and (info1[i]['GPS_time_stamp_M']!=info0[i]['GPS_time_stamp_M']+1):
