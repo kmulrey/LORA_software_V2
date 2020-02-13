@@ -133,7 +133,7 @@ def get_event_timestamp(detector,lasa):
     else:
         print 'doing est. time stamp '
 
-        detector.event_time_stamp=10*(1.0*detector.ctd/200000000.0)*(1000000000.0)
+        detector.event_time_stamp=detector.nsec#10*(1.0*detector.ctd/200000000.0 )*(1000000000.0)
         print detector.event_time_stamp
 
 def get_event_timestamp_V2(detector,lasa):
