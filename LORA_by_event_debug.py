@@ -21,6 +21,9 @@ e=int(options.event)
 ind=int(options.ind)
 
 
+
+
+
 #data_dir='/Users/kmulrey/LOFAR/LORA/LORAraw/'
 data_dir='/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/'
 LORA4times=np.genfromtxt('/vol/astro3/lofar/vhecr/lora_triggered/LORA/'+'LORAtime4')
