@@ -162,7 +162,7 @@ for t in np.arange(run):
     output_file.write('{0}\t{1}\t{2:.2f}\t{3:.2f}\t{4:.2f}\t{5:.2f}\t{6}\t{7:.2f}\t{8:.2f}\t{9:.2f}\t{10:.2f}\t{11:.2f}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}\t{18}\t{19}\t{20}\t{21}\t{22}\t{23}\t{24}\t{25}\t{26}\t{27},\t{28}\t{29}\t{30}\t{31}\t{32}\t{33}\t{34}\t{35}\t{36}\t{37}\t{38}\t{39}\t{40}\n'.format(int(ev.UTC_min), int(ev.nsec_min/10), ev.x_core, ev.y_core, ev.fit_elevation, ev.fit_phi, ev.energy*np.power(10,15), ev.x_core_err, ev.y_core_err, ev.Rm, ev.fit_elevation_err, ev.fit_phi_err, ev.energy_err*np.power(10,15), ev.Ne, ev.Ne_err, ev.CorCoef_xy, ev.Ne_RefA, ev.NeErr_RefA, ev.Energy_RefA*np.power(10,15), ev.EnergyErr_RefA*np.power(10,15), LOFAR_trig, int(detectors[0].trigg_condition),int(detectors[4].trigg_condition),int(detectors[8].trigg_condition),int(detectors[12].trigg_condition),int(detectors[16].trigg_condition),0,0,0,0,0, lasa1_status,lasa2_status,lasa3_status,lasa4_status,lasa5_status,0,0,0,0,0))
 
     output_file.write('//Detector coordinates w.r.t CS002 LBA center\n')
-    output_file.write('//Det_no.    X_Cord(m)    Y_Cord(m)    Z_Cord(m)    UTC_time    (10*nsecs)  int_ADC_count  gain(ADC/muon)    Particle_Density(/m2), baseline(ADC), rms(ADC), corrected_peak(ADC), corrected_threshold(ADC), avg_mean(ADC), avg_sigma(ADC)\n')
+    output_file.write('//Det_no.    X_Cord(m)    Y_Cord(m)    Z_Cord(m)    UTC_time    (10*nsecs)  int_ADC_count  gain(ADC/muon)    Particle_Density(/m2), baseline(ADC), rms(ADC), corrected_peak(ADC), corrected_threshold(ADC), avg_mean(ADC), avg_sigma(ADC), trigger?\n')
 
     for i in np.arange(len(detectors)):
         print i,detectors[i].x_cord,detectors[i].y_cord,detectors[i].z_cord,detectors[i].gps,detectors[i].cal_time,detectors[i].density

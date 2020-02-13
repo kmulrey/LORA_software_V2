@@ -178,6 +178,8 @@ def cal_event_timestamp(detectors,lasa):
             
                 detectors[4*int(lasa_ind)+i].cal_time=detectors[4*int(lasa_ind)+i].threshold_time-trigg_time+detectors[lasa_ind*4].event_time_stamp+det.cable_delay[4*int(lasa_ind)+i]
                 detectors[4*int(lasa_ind)+i].final_event_time=detectors[4*int(lasa_ind)+i].cal_time
+                print detectors[4*int(lasa_ind)+i].final_event_time=detectors[4*int(lasa_ind)+i].cal_time
+
                 # maybe this has to be corrected for wrap-around seconds
 
             #print '{0}   {1}  {2}  {3}  {4}  {5}'.format(4*int(lasa_ind)+i,int(detectors[4*int(lasa_ind)+i].cal_time),detectors[4*int(lasa_ind)+i].threshold_time, trigg_time,detectors[4*int(lasa_ind)+i].event_time_stamp,det.cable_delay[4*int(lasa_ind)+i])

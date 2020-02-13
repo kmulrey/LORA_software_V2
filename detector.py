@@ -126,7 +126,7 @@ def load_sec_information(info0,info1,info2,lasas,V):
             lasas[i].sync=np.asarray([info0[i]['sync'],info1[i]['sync'],info2[i]['sync']])
             lasas[i].quant=np.asarray([info0[i]['quant'],info1[i]['quant'],info2[i]['quant']])
             lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
-
+           
     if V=='V2':
         for i in np.arange(len(lasas)):
         
