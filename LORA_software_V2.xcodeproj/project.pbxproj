@@ -22,7 +22,6 @@
 		4192C10C23950D1A00A586F7 /* debug.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = debug.py; sourceTree = "<group>"; };
 		4192C10E23950FD700A586F7 /* error_list.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = error_list.txt; sourceTree = "<group>"; };
 		4192C10F239512EA00A586F7 /* LORA_by_event_debug.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LORA_by_event_debug.py; sourceTree = "<group>"; };
-		41F742B223F56491004CE5D7 /* debug */ = {isa = PBXFileReference; lastKnownFileType = folder; path = debug; sourceTree = "<group>"; };
 		41F742B323F5661E004CE5D7 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		41F742B423F56623004CE5D7 /* debug */ = {isa = PBXFileReference; lastKnownFileType = folder; path = debug; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +47,6 @@
 				4148787A2375790700C2FC19 /* LORAparameters.py */,
 				4192C10C23950D1A00A586F7 /* debug.py */,
 				4148787B23759F3400C2FC19 /* event_time.py */,
-				41F742B223F56491004CE5D7 /* debug */,
 			);
 			sourceTree = "<group>";
 		};
