@@ -94,7 +94,7 @@ def find_counts(detector):
             total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
 
         if total_count>0:
-        detector.trace_int_counts=total_count
+            detector.trace_int_counts=total_count
         
         
 
