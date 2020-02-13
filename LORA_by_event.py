@@ -51,7 +51,7 @@ if ind>-1:
 else:   
     LOFAR_id=str(e)
 
-timestamp=int(LOFAR_id)+LORA.event_id_offset
+timestamp=int(float(LOFAR_id))+LORA.event_id_offset
 #LOFAR_id=str(int(timestamp-LORA.event_id_offset))
 
 #print LORA4times.T[0]
