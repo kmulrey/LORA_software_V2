@@ -123,7 +123,9 @@ def get_arrival_time(detector):
                 flag=1
 
 def get_event_timestamp(detector,lasa):
-    
+    print '_______event timestamp______'
+    print lasa.CTP
+    print lasa.sec_flag!
     if lasa.sec_flag!=1 and lasa.CTP[1]>0:
         detector.event_time_stamp=10*int((lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2])))
         
