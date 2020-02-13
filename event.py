@@ -128,7 +128,14 @@ def get_event_timestamp(detector,lasa):
     print lasa.sec_flag
     if lasa.sec_flag!=1 and lasa.CTP[1]>0:
         detector.event_time_stamp=10*int((lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2])))
-        
+        print 'doing real time stamp '
+        print detector.event_time_stamp
+    else:
+        print 'doing est. time stamp '
+
+        detector.event_time_stamp=10*(ctd/200000000.0)
+        print detector.event_time_stamp
+
 def get_event_timestamp_V2(detector,lasa):
     
     #print detector.number, detector.number%2
