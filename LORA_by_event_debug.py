@@ -116,7 +116,7 @@ for t in np.arange(run):
         continue
     
     det.load_event_information(info,detectors)
-    det.load_sec_information(sec_info0,sec_info1,sec_info2,lasas)
+    det.load_sec_information(sec_info0,sec_info1,sec_info2,lasas,'V1')
     det.load_log_information(log_info,detectors)
     det.load_noise_information(noise_info,detectors)
 
