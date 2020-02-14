@@ -4,7 +4,7 @@
 
 use root
 
-#RUNNR=$(printf %06d $SLURM_ARRAY_TASK_ID)
+RUNNR=$(printf %06d $SLURM_ARRAY_TASK_ID)
 
 cd /vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2
 
