@@ -8,4 +8,5 @@ use root
 
 cd /vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2
 
-python LORA_by_event_debug.py -e 110147934#-i $RUNNR
+python LORA_by_event_debug.py -e 110147934
+#-i $RUNNR
