@@ -113,8 +113,7 @@ for t in np.arange(run):
         print 'Can\'t find corresponding 1 Sec message: {0}  {1}'.format(int(info[0]['gps']),int(sec_info0[0]['GPS_time_stamp']))
         for l in np.arange(5):
            lasas[l].sec_flag=1
-        continue
-    
+        
     det.load_event_information(info,detectors)
     det.load_sec_information(sec_info0,sec_info1,sec_info2,lasas,'V1')
     det.load_log_information(log_info,detectors)

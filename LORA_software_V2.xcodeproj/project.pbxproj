@@ -24,12 +24,14 @@
 		4192C10F239512EA00A586F7 /* LORA_by_event_debug.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = LORA_by_event_debug.py; sourceTree = "<group>"; };
 		41F742B323F5661E004CE5D7 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 		41F742B423F56623004CE5D7 /* debug */ = {isa = PBXFileReference; lastKnownFileType = folder; path = debug; sourceTree = "<group>"; };
+		41F742B623F6D993004CE5D7 /* eventlist_xmaxfit_done_701.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = eventlist_xmaxfit_done_701.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		4148786E2373434D00C2FC19 = {
 			isa = PBXGroup;
 			children = (
+				41F742B623F6D993004CE5D7 /* eventlist_xmaxfit_done_701.txt */,
 				41F742B423F56623004CE5D7 /* debug */,
 				41F742B323F5661E004CE5D7 /* data */,
 				414878752373439100C2FC19 /* README */,
