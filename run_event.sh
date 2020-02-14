@@ -4,8 +4,8 @@
 
 use root
 
-RUNNR=$(printf %06d $SLURM_ARRAY_TASK_ID)
+#RUNNR=$(printf %06d $SLURM_ARRAY_TASK_ID)
 
 cd /vol/astro3/lofar/lora/LORA_software_V2/LORA_software_V2
 
-python LORA_by_event_debug.py -i $RUNNR
+python LORA_by_event_debug.py -e 110147934#-i $RUNNR
