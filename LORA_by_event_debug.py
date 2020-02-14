@@ -13,7 +13,7 @@ import ROOT
 from optparse import OptionParser
 
 parser = OptionParser()
-parser.add_option('-e', '--event',type='int',help='event numbert',default=136950320)
+parser.add_option('-e', '--event',type='int',help='event number',default=136950320)
 parser.add_option('-i', '--ind',type='str',help='line number of event',default=-1)
 
 (options, args) = parser.parse_args()

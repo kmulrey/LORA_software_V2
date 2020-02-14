@@ -134,7 +134,7 @@ def get_event_timestamp(detector,lasa):
     else:
         print 'doing est. time stamp '
 
-        detector.event_time_stamp=detector.nsec#10*(1.0*detector.ctd/200000000.0 )*(1000000000.0)
+        detector.event_time_stamp=10*detector.nsec#10*(1.0*detector.ctd/200000000.0 )*(1000000000.0)
         print detector.event_time_stamp
 
 def get_event_timestamp_V2(detector,lasa):
@@ -146,7 +146,7 @@ def get_event_timestamp_V2(detector,lasa):
             #print detector.event_time_stamp
         else:
             #print 'flagged event'
-            detector.event_time_stamp=detector.nsec
+            detector.event_time_stamp=10*detector.nsec
             #print detector.event_time_stamp
 
         
@@ -156,7 +156,7 @@ def get_event_timestamp_V2(detector,lasa):
             #print detector.event_time_stamp
         else:
             #print 'flagged event'
-            detector.event_time_stamp=detector.nsec
+            detector.event_time_stamp=10*detector.nsec
             #print detector.event_time_stamp
 
 
@@ -172,10 +172,10 @@ def cal_event_timestamp(detectors,lasa):
     args=np.argsort(thresh_use)
     #print int(args[detectors[0].trigg_condition]-1)
     if len(thresh_use)>1:
-        print 'trigger condition: ',trigg_cond
-        print 'sorted: {0}'.format(np.sort(thresh_use))
-        print thresh_use
-        print args
+        #print 'trigger condition: ',trigg_cond
+        #print 'sorted: {0}'.format(np.sort(thresh_use))
+        #print thresh_use
+        #print args
         #print 'use index: {0}'.format(args[int(trigg_cond)-1])
         try:
             trigg_time=thresh_use[args[int(trigg_cond)-1]]
@@ -188,7 +188,7 @@ def cal_event_timestamp(detectors,lasa):
             
                 detectors[4*int(lasa_ind)+i].cal_time=detectors[4*int(lasa_ind)+i].threshold_time-trigg_time+detectors[lasa_ind*4].event_time_stamp+det.cable_delay[4*int(lasa_ind)+i]
                 detectors[4*int(lasa_ind)+i].final_event_time=detectors[4*int(lasa_ind)+i].cal_time
-                print detectors[4*int(lasa_ind)+i].final_event_time
+                #print detectors[4*int(lasa_ind)+i].final_event_time
 
                 # maybe this has to be corrected for wrap-around seconds
 
