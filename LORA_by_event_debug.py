@@ -18,7 +18,7 @@ parser.add_option('-i', '--ind',type='int',help='line number of event',default=-
 
 (options, args) = parser.parse_args()
 e=int(options.event)
-ind=int(options.ind)
+ind=int(float(options.ind))
 
 
 
