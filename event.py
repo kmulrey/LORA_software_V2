@@ -349,7 +349,6 @@ def fit_arrival_direction(detectors,event):
     if phi>360.0:
         phi=phi=360
 
-    print 'fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi)
     
     if math.isnan(theta)==True or math.isnan(phi)==True:
         event.fit_theta=event.theta
@@ -362,6 +361,7 @@ def fit_arrival_direction(detectors,event):
     event.fit_elevation_err=err_theta
     event.fit_phi_err=err_phi
 
+    print 'fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi)
 
 
 def theta_phi(theta,phi,psi,x0,y0,z0):
