@@ -396,7 +396,8 @@ def getLogV1(det, entry):
         for i in np.arange(nE):
             det.GetEntry(entry)
             thesh_temp=det.GetLeaf('Channel_thres_low').GetValue()
-            if thesh_temp>0:
+            print thesh_temp
+            if thesh_temp>0.0:
                 thresh_avg=thresh_avg+hesh_temp
                 thresh_count=thresh_count+1
         Threshold_low=thresh_avg/(1.0*thresh_count)
