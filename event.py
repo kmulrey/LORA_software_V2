@@ -353,14 +353,18 @@ def fit_arrival_direction(detectors,event):
     if math.isnan(theta)==True or math.isnan(phi)==True:
         event.fit_theta=event.theta
         event.fit_phi=event.phi
+        event.fit_elevation=90.0-theta
+        event.fit_theta_err=err_theta
+        event.fit_elevation_err=err_theta
+        event.fit_phi_err=err_phi
         print 'fitting doesn\'t work'
-        
-    event.fit_theta=theta
-    event.fit_phi=phi
-    event.fit_elevation=90.0-theta
-    event.fit_theta_err=err_theta
-    event.fit_elevation_err=err_theta
-    event.fit_phi_err=err_phi
+    else:
+        event.fit_theta=theta
+        event.fit_phi=phi
+        event.fit_elevation=90.0-theta
+        event.fit_theta_err=err_theta
+        event.fit_elevation_err=err_theta
+        event.fit_phi_err=err_phi
 
     print 'fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi)
 
