@@ -11,6 +11,11 @@ nDetV1=20
 dtV1=2.5
 timesV1=np.arange(0,4000*dtV1,dtV1)
 
+avg_threshold=np.asarray([ 27.24867982,  27.08347496,  21.3469044,   22.45092564,  16.96505311,
+16.62127466,  17.87311077,  17.90886191,  20.3131563,   20.87103187,
+20.18339909,  22.10192716,  22.96687405,  23.04840668,  13.57128983,
+13.92050076,  27.7231563,   15.69400607,  23.10057663,  24.20940819,])
+
 
 def find_tag(timestamp,ns_timestamp,data_dir):
     #print '\n________________________\n'
@@ -378,7 +383,7 @@ def return_second_data(filename,utc,nsec,data_dir):
     return all_info,all_info1,all_info2
 
 
-def getLogV1(det, entry):
+def getLogV1(det,d, entry):
     nE= det.GetEntries()
     det.GetEntry(entry)
     
@@ -401,6 +406,8 @@ def getLogV1(det, entry):
                 thresh_count=thresh_count+1
         if thresh_count>0:
             Threshold_low=thresh_avg/(1.0*thresh_count)
+        else:
+            Threshold_low=avg_threshold[d]
         
     
     info={'threshold':Threshold_low}
@@ -485,15 +492,15 @@ def return_log_data(filename,utc,nsec,data_dir):
         detname='Det'+str(1+i)
         det=tree_log.GetBranch(detname)
         if i==0 or i==1 or i==2 or i==3:
-            all_info.append(getLogV1(det, entry1))
+            all_info.append(getLogV1(det,i, entry1))
         if i==4 or i==5 or i==6 or i==7:
-            all_info.append(getLogV1(det, entry2))
+            all_info.append(getLogV1(det,i, entry2))
         if i==8 or i==9 or i==10 or i==11:
-            all_info.append(getLogV1(det, entry3))
+            all_info.append(getLogV1(det,i, entry3))
         if i==12 or i==13 or i==14 or i==15:
-            all_info.append(getLogV1(det, entry4))
+            all_info.append(getLogV1(det,i, entry4))
         if i==16 or i==17 or i==18 or i==19:
-            all_info.append(getLogV1(det, entry5))
+            all_info.append(getLogV1(det,i, entry5))
     
     return all_info
 
