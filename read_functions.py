@@ -379,7 +379,7 @@ def return_second_data(filename,utc,nsec,data_dir):
 
 
 def getLogV1(det, entry):
-    
+    nE= det.GetEntries()
     det.GetEntry(entry)
     
     
@@ -391,13 +391,8 @@ def getLogV1(det, entry):
     print '_________________________________________'
     print 'finding threshold:  {0}'.format(Threshold_low)
     if Threshold_low==0.0:
-        det.GetEntry(entry-1)
-        print 'threshold-1:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
-        det.GetEntry(entry-2)
-        print 'threshold-2:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
-        det.GetEntry(entry-3)
-        print 'threshold-3:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
-    
+        print 'issue with Threshold_low':
+        
     
     return info
 
