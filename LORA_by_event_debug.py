@@ -94,7 +94,7 @@ for t in np.arange(run):
     print '{2}:    {0}   {1}'.format(timestamp,ns_timestamp,tag)
     
     
-    if tag==no_match:
+    if tag=='no_match':
         print 'no log file found, doing this the hard way'
         tag=read.find_tag_exception(timestamp,ns_timestamp,data_dir)
 
