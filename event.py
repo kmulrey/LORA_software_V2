@@ -7,7 +7,7 @@ from ROOT import TH2F
 from ROOT import TF2
 from ROOT import TMath
 from ROOT import TVirtualFitter
-
+import math
 
 atm_flag=0
 atm_l=11
@@ -350,6 +350,11 @@ def fit_arrival_direction(detectors,event):
         phi=phi=360
 
     print 'fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi)
+    
+    if math.isnan(theta)==True or math.isnan(phi)==True:
+        event.fit_theta=event.theta
+        event.fit_phi=event.phi
+
     event.fit_theta=theta
     event.fit_phi=phi
     event.fit_elevation=90.0-theta
