@@ -273,7 +273,6 @@ def return_root(filename,utc,nsec,data_dir):
         info=getDataV1(det,event_index)
         all_info.append(info)
     
-    root_file=ROOT.TFile.Close()
 
     return all_info
 
