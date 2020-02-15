@@ -386,14 +386,22 @@ def getLogV1(det, entry):
     YMD=det.GetLeaf('YMD').GetValue()
     GPS_time_stamp=det.GetLeaf('Time_stamp').GetValue()
     Threshold_low=det.GetLeaf('Channel_thres_low').GetValue()
-    info={'threshold':Threshold_low}
     
     print '_________________________________________'
     print 'finding threshold:  {0}'.format(Threshold_low)
     if Threshold_low==0.0:
         print 'issue with Threshold_low {0}'.format(nE)
-        
+        thresh_avg=0
+        thresh_count=0
+        for i in np.arange(nE):
+            det.GetEntry(entry)
+            thesh_temp=det.GetLeaf('Channel_thres_low').GetValue()
+            if thesh_temp>0:
+                thresh_avg=thresh_avg+hesh_temp
+                thresh_count=thresh_count+1
+        Threshold_low=thresh_avg/(1.0*thresh_count)
     
+    info={'threshold':Threshold_low}
     return info
 
 def getNoiseV1(det, entry):
