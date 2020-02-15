@@ -256,6 +256,9 @@ def do_arrival_direction(detectors,event):
     m=(P-t0*Q-S3+t0*S4)/R
     l=(-S1/S)-((P*S2)/(R*S))+((t0*Q*S2)/(R*S))+((S2*S3)/(R*S))-((t0*S2*S4)/(R*S))+((t0*T1)/S)
     n=np.sqrt(1.0-(l*l+m*m))
+    
+    
+    print 'direction params:  {0} {1}  {2}  {3}'.format(t0,m,l,n)
 
     theta=(np.arcsin(np.sqrt(l*l+m*m)))*(180.0/np.pi)    #Zenith in degrees (from vertical direction +Z)
     phi=(np.arccos(m/np.sqrt(l*l+m*m)))*(180.0/np.pi)    #in degrees (Eastward from North)
