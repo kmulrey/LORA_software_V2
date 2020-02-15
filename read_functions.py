@@ -269,6 +269,8 @@ def return_root(filename,utc,nsec,data_dir):
         det=tree_event.GetBranch(detname)
         info=getDataV1(det,event_index)
         all_info.append(info)
+    
+    root_file=ROOT.TFile.Close()
 
     return all_info
 
