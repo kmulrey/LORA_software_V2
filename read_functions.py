@@ -387,6 +387,18 @@ def getLogV1(det, entry):
     GPS_time_stamp=det.GetLeaf('Time_stamp').GetValue()
     Threshold_low=det.GetLeaf('Channel_thres_low').GetValue()
     info={'threshold':Threshold_low}
+    
+    print '_________________________________________'
+    print 'finding threshold:  {0}'.format(Threshold_low)
+    if Threshold_low==0.0:
+        det.GetEntry(entry-1)
+        print 'threshold-1:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
+        det.GetEntry(entry-2)
+        print 'threshold-2:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
+        det.GetEntry(entry-3)
+        print 'threshold-3:  {0}'.format(det.GetLeaf('Channel_thres_low').GetValue())
+    
+    
     return info
 
 def getNoiseV1(det, entry):
