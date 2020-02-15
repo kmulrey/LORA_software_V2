@@ -75,9 +75,12 @@ def find_counts(detector):
     
     if(background_mean<100 and background_mean>0):
         detector.corrected_threshold=detector.threshold-background_mean
+        
+        print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
+        
     else:
         detector.corrected_threshold=detector.threshold-detector.sec_mean
-
+        print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
     if background_rms<10.0:
         corrected=detector.counts-background_mean
         peak=np.max(corrected)
