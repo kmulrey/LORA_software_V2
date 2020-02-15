@@ -154,19 +154,22 @@ def find_tag_exception(timestamp,ns_timestamp,data_dir):
     
     for i in np.arange(len(filelist)):
         root_file=ROOT.TFile.Open(filelist[i])
-        tree_event = root_file.Get("Tree_event")
+        try:
+            tree_event = root_file.Get("Tree_event")
         
         
         
-        event_index=-1
-        event_index=find_entry_number(timestamp,ns_timestamp,tree_event)
-        print 'did we find the index?   {0}'.format(event_index)
-        if event_index>-1:
-            found=1
-            filetag=filelist[i].split('raw/')[1].split('.')[0]
-            break
-
-
+            event_index=-1
+            event_index=find_entry_number(timestamp,ns_timestamp,tree_event)
+            print 'did we find the index?   {0}'.format(event_index)
+        
+            if event_index>-1:
+                found=1
+                filetag=filelist[i].split('raw/')[1].split('.')[0]
+                break
+        except:
+            print 'can\'t open the event leaf'
+    
     if found==1:
         print 'returning file tag'
         return filetag
