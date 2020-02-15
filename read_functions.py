@@ -391,7 +391,7 @@ def getLogV1(det, entry):
     print '_________________________________________'
     print 'finding threshold:  {0}'.format(Threshold_low)
     if Threshold_low==0.0:
-        print 'issue with Threshold_low':
+        print 'issue with Threshold_low {0}'.format(nE)
         
     
     return info
