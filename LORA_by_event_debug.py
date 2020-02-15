@@ -93,6 +93,14 @@ for t in np.arange(run):
 
     print '{2}:    {0}   {1}'.format(timestamp,ns_timestamp,tag)
     
+    
+    if tag==no_match:
+        print 'no log file found, doing this the hard way'
+        tag=read.find_tag_exception(timestamp,ns_timestamp,data_dir)
+
+        print '---> {0}'.format(tag)
+    
+    
     log_file_info=read.log_file(tag,data_dir)
     info=read.return_root(tag,timestamp,ns_timestamp,data_dir)
     sec_info0,sec_info1,sec_info2=read.return_second_data(tag,timestamp,ns_timestamp,data_dir)

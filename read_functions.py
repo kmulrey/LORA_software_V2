@@ -256,7 +256,7 @@ def return_root(filename,utc,nsec,data_dir):
 
     #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
-    print 'readind root file: {0}'.format(data_dir+filename+'.root')
+    print 'reading root file: {0}'.format(data_dir+filename+'.root')
     tree_sec = root_file.Get("Tree_sec")
     tree_event = root_file.Get("Tree_event")
     tree_log = root_file.Get("Tree_log")
