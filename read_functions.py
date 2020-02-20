@@ -597,21 +597,21 @@ def log_file(filename,data_dir):
 
 def return_event_V2(event_id,event_GPS, event_ns,event_data):
 
-    Station=event_data.item()['Station']
-    Detector=event_data.item()['Detector']
-    Channel_Passed_Threshold=event_data.item()['Channel_Passed_Threshold']
-    Trigg_Threshold=event_data.item()['Trigg_Threshold']
-    Charge_Corrected=event_data.item()['Charge_Corrected']
-    Peak_Height_Corrected=event_data.item()['Peak_Height_Corrected']
-    Peak_Height_Raw=event_data.item()['Peak_Height_Raw']
-    Waveform_Raw=event_data.item()['Waveform_Raw']
-    Event_Id=event_data.item()['Event_Id']
-    Run_Id=event_data.item()['Run_Id']
-    GPS_Time_Stamp=event_data.item()['GPS_Time_Stamp']
-    CTD=event_data.item()['CTD']
-    nsec_Online=event_data.item()['nsec_Online']
-    HiSparc_Trigg_Pattern=event_data.item()['HiSparc_Trigg_Pattern']
-    HiSparc_Trigg_Condition=event_data.item()['HiSparc_Trigg_Condition']
+    Station=event_data['Station']
+    Detector=event_data['Detector']
+    Channel_Passed_Threshold=event_data['Channel_Passed_Threshold']
+    Trigg_Threshold=event_data['Trigg_Threshold']
+    Charge_Corrected=event_data['Charge_Corrected']
+    Peak_Height_Corrected=event_data['Peak_Height_Corrected']
+    Peak_Height_Raw=event_data['Peak_Height_Raw']
+    Waveform_Raw=event_data['Waveform_Raw']
+    Event_Id=event_data['Event_Id']
+    Run_Id=event_data['Run_Id']
+    GPS_Time_Stamp=event_data['GPS_Time_Stamp']
+    CTD=event_data['CTD']
+    nsec_Online=event_data['nsec_Online']
+    HiSparc_Trigg_Pattern=event_data['HiSparc_Trigg_Pattern']
+    HiSparc_Trigg_Condition=event_data['HiSparc_Trigg_Condition']
 
 
     dets=Detector[Event_Id==event_id]
@@ -657,12 +657,12 @@ def return_event_V2(event_id,event_GPS, event_ns,event_data):
 def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
 
 
-    Station=osm_data.item()['Station']
-    Master_Or_Slave=osm_data.item()['Master_Or_Slave']
-    GPS_Time_Stamp=osm_data.item()['GPS_Time_Stamp']
-    Sync_Error=osm_data.item()['Sync_Error']
-    Quant_Error=osm_data.item()['Quant_Error']
-    CTP=osm_data.item()['CTP']
+    Station=osm_data['Station']
+    Master_Or_Slave=osm_data['Master_Or_Slave']
+    GPS_Time_Stamp=osm_data['GPS_Time_Stamp']
+    Sync_Error=osm_data['Sync_Error']
+    Quant_Error=osm_data['Quant_Error']
+    CTP=osm_data['CTP']
 
     all_info=[]
     all_info1=[]
