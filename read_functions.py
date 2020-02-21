@@ -597,7 +597,6 @@ def log_file(filename,data_dir):
 
 def return_event_V2(event_id,event_GPS, event_ns,event_data):
 
-    print event_data
     Station=event_data['Station']
     Detector=event_data['Detector']
     Channel_Passed_Threshold=event_data['Channel_Passed_Threshold']
