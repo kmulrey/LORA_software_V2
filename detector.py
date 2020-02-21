@@ -113,11 +113,10 @@ def load_event_information(info,detectors):
     
     if len(detectors)>20:
         for i in np.arange(5,10):
-            print i*4+0
             detectors[i*4+0].trig = int(detectors[i*4].trigg_pattern)>>8&1
             detectors[i*4+1].trig = int(detectors[i*4].trigg_pattern)>>9&1
             detectors[i*4+2].trig = int(detectors[i*4].trigg_pattern)>>10&1
-            detectors[i*4+3].trig =int(detectors[i*4].trigg_pattern)>>11&1
+            detectors[i*4+3].trig = int(detectors[i*4].trigg_pattern)>>11&1
         
 
 
