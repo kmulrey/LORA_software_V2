@@ -657,6 +657,8 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
 
     Station=osm_data['Station']
     Master_Or_Slave=osm_data['Master_Or_Slave']
+    print Station, Master_Or_Slave
+    
     GPS_Time_Stamp=osm_data['GPS_Time_Stamp']
     Sync_Error=osm_data['Sync_Error']
     Quant_Error=osm_data['Quant_Error']
