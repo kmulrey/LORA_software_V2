@@ -64,7 +64,8 @@ def read_attenuation():
         return 0
 
 def find_counts(detector):
-    
+    print 'finding counts'
+    print detector.number
     # find background
     background=detector.counts[0:int(LORA.BG_No_Bin)]
     background_mean=np.average(background)
