@@ -111,13 +111,14 @@ def load_event_information(info,detectors):
         detectors[i*4+1].trig=m2
         detectors[i*4+2].trig=s1
         detectors[i*4+3].trig=s2
-        
-    for i in np.arange(5,10):
-        print i*4+0
-        detectors[i*4+0] = int(detectors[i*4].trigg_pattern)>>8&1
-        detectors[i*4+1] = int(detectors[i*4].trigg_pattern)>>9&1
-        detectors[i*4+2] = int(detectors[i*4].trigg_pattern)>>10&1
-        detectors[i*4+3] =(detectors[i*4].trigg_pattern)>>11&1
+    
+    if len(detectors)>20:
+        for i in np.arange(5,10):
+            print i*4+0
+            detectors[i*4+0] = int(detectors[i*4].trigg_pattern)>>8&1
+            detectors[i*4+1] = int(detectors[i*4].trigg_pattern)>>9&1
+            detectors[i*4+2] = int(detectors[i*4].trigg_pattern)>>10&1
+            detectors[i*4+3] =(detectors[i*4].trigg_pattern)>>11&1
         
 
 
