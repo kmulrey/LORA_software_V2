@@ -657,45 +657,62 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data
 
     Station_H=osm_data_hisparc['Station']
     Master_Or_Slave_H=osm_data_hisparc['Master_Or_Slave']
-    
-    
     GPS_Time_Stamp_H=osm_data_hisparc['GPS_Time_Stamp']
     Sync_Error_H=osm_data_hisparc['Sync_Error']
     Quant_Error_H=osm_data_hisparc['Quant_Error']
     CTP_H=osm_data_hisparc['CTP']
+    
+    
+    Station_A=osm_data_hisparc['Station']
+    GPS_Time_Stamp_A=osm_data_hisparc['GPS_Time_Stamp']
+    Sync_Error_A=osm_data_hisparc['Sync_Error']
+    Quant_Error_A=osm_data_hisparc['Quant_Error']
+    CTP_A=osm_data_hisparc['CTP']
+    UTC_offset_A=osm_data_hisparc['UTC_offset']
 
     all_info=[]
     all_info1=[]
     all_info2=[]
-    '''
+
     for t in np.arange(3):
         #for i in np.arange(1):
         for i in np.arange(LORA.nLASA):
             lasa=i+1
             #master
             #print 'getting OSM for {0}'.format(i+1)
-            gpsM= GPS_Time_Stamp[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
-            if len(gpsM>0):
-                syncM= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
-                quantM= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
-                ctpM= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==0)]
-                #print gpsM
-                timestamp = date.fromtimestamp(gpsM)
-                ymdM=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
-                #slave
-                gpsS= GPS_Time_Stamp[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
-                syncS= Sync_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
-                quantS= Quant_Error[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
-                ctpS= CTP[(GPS_Time_Stamp==(event_GPS+t))*(Station==i+1)*(Master_Or_Slave==1)]
-                timestamp = date.fromtimestamp(gpsM)
-                ymdS=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
-        
-        
-                #print gpsM,syncM,ctpM
+            if lasa<=5:
+                gpsM= GPS_Time_Stamp_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==0)]
+                if len(gpsM>0):
+                    syncM= Sync_Error_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==0)]
+                    quantM= Quant_Error_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==0)]
+                    ctpM= CTP_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==0)]
+                    #print gpsM
+                    timestamp = date.fromtimestamp(gpsM)
+                    ymdM=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
+                    #slave
+                    gpsS= GPS_Time_Stamp_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==1)]
+                    syncS= Sync_Error_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==1)]
+                    quantS= Quant_Error_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==1)]
+                    ctpS= CTP_H[(GPS_Time_Stamp_H==(event_GPS+t))*(Station_H==i+1)*(Master_Or_Slave_H==1)]
+                    timestamp = date.fromtimestamp(gpsM)
+                    ymdS=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
                 
-                info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
+                    info={'lasa':lasa,'YMD_M':ymdM,'GPS_time_stamp_M':gpsM,'sync_M':syncM,'CTP_M':ctpM,'quant_M':quantM,'YMD_S':ymdS,'GPS_time_stamp_S':gpsS,'sync_S':syncS,'CTP_S':ctpS,'quant_S':quantS}
+                else:
+                    info={'lasa':lasa,'YMD_M':np.asarray([0]),'GPS_time_stamp_M':np.asarray([0]),'sync_M':np.asarray([0]),'CTP_M':np.asarray([0]),'quant_M':np.asarray([0]),'YMD_S':np.asarray([0]),'GPS_time_stamp_S':np.asarray([0]),'sync_S':np.asarray([0]),'CTP_S':np.asarray([0]),'quant_S':np.asarray([0])}
+            
             else:
-                info={'lasa':lasa,'YMD_M':np.asarray([0]),'GPS_time_stamp_M':np.asarray([0]),'sync_M':np.asarray([0]),'CTP_M':np.asarray([0]),'quant_M':np.asarray([0]),'YMD_S':np.asarray([0]),'GPS_time_stamp_S':np.asarray([0]),'sync_S':np.asarray([0]),'CTP_S':np.asarray([0]),'quant_S':np.asarray([0])}
+                gps= GPS_Time_Stamp_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
+                if len(gps>0):
+                    sync= Sync_Error_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
+                    quant= Quant_Error_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
+                    ctp= CTP_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
+                    timestamp = date.fromtimestamp(gps)
+                    ymd=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
+                    info={'lasa':lasa,'YMD':ymd,'GPS_time_stamp':gps,'sync':sync,'CTP':ctp,'quant':quant}
+                else:
+                    info={'lasa':lasa,'YMD':np.asarray([0]),'GPS_time_stamp':np.asarray([0]),'sync':np.asarray([0]),'CTP':np.asarray([0]),'quant':np.asarray([0])}
+
             
             if t==0:
                 all_info.append(info)
@@ -703,5 +720,5 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data
                 all_info1.append(info)
             if t==2:
                 all_info2.append(info)
-    '''
+    
     return all_info,all_info1,all_info2
