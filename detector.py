@@ -140,7 +140,7 @@ def load_sec_information(info0,info1,info2,lasas,V):
             
                 lasas[i].number=i+1
 
-                if info0[i]['CTP']==1 or info1[i]['CTP']==1 or info2[i]['CTP']==1:
+                if info0[i]['CTP_S']==1 or info1[i]['CTP_S']==1 or info2[i]['CTP_S']==1:
                     lasas[i].sec_flag=1
                     
                     
@@ -169,7 +169,7 @@ def load_sec_information(info0,info1,info2,lasas,V):
             
                 lasas[i].number=i+1
 
-                if info0[i]['CTP_S']==1 or info1[i]['CTP_S']==1 or info2[i]['CTP_S']==1:
+                if info0[i]['CTP']==1 or info1[i]['CTP']==1 or info2[i]['CTP']==1:
                     lasas[i].sec_flag=1
                 
         
