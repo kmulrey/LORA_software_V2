@@ -77,11 +77,11 @@ def find_counts(detector):
         if(background_mean<100 and background_mean>0):
             detector.corrected_threshold=detector.threshold-background_mean
         
-            print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
+            #print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
         
         else:
             detector.corrected_threshold=detector.threshold-detector.sec_mean
-            print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
+            #print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
         
         if detector.corrected_threshold<0:
             detector.corrected_threshold=detector.threshold-detector.sec_mean
@@ -111,7 +111,7 @@ def find_counts(detector):
             detector.corrected_peak=peak
 
     else:
-        print 'counts new version : {0}'.format(detector.number)
+        print 'counts new version : {0} {1}'.format(detector.number,detector.sec_mean)
 
     #print '{0:.2f}  -> {1:.2f}  :   {2:0.2f}'.format(total_count, detector.total_counts,total_count/detector.total_counts)
 
