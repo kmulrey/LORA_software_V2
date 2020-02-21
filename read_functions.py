@@ -663,12 +663,12 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data
     CTP_H=osm_data_hisparc['CTP']
     
     
-    Station_A=osm_data_hisparc['Station']
-    GPS_Time_Stamp_A=osm_data_hisparc['GPS_Time_Stamp']
-    Sync_Error_A=osm_data_hisparc['Sync_Error']
-    Quant_Error_A=osm_data_hisparc['Quant_Error']
-    CTP_A=osm_data_hisparc['CTP']
-    UTC_offset_A=osm_data_hisparc['UTC_offset']
+    Station_A=osm_data_aera['Station']
+    GPS_Time_Stamp_A=osm_data_aera['GPS_Time_Stamp']
+    Sync_Error_A=osm_data_aera['Sync_Error']
+    Quant_Error_A=osm_data_aera['Quant_Error']
+    CTP_A=osm_data_aera['CTP']
+    UTC_offset_A=osm_data_aera['UTC_offset']
 
     all_info=[]
     all_info1=[]
@@ -708,6 +708,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data
                     quant= Quant_Error_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
                     ctp= CTP_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
                     timestamp = date.fromtimestamp(gps)
+                    
                     ymd=int(str(timestamp.year).zfill(2)+str(timestamp.month).zfill(2)+str(timestamp.day).zfill(2))
                     info={'lasa':lasa,'YMD':ymd,'GPS_time_stamp':gps,'sync':sync,'CTP':ctp,'quant':quant}
                 else:
