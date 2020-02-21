@@ -226,7 +226,7 @@ def load_log_information(info,detectors):
     #print info[0].keys()
     for i in np.arange(20):
         detectors[i].threshold=info[i]['threshold']/0.48
-    if len(detectors>20):
+    if len(detectors)>20:
         for i in np.arange(20,40):
             detectors[i].threshold=info[i]['threshold']
             
