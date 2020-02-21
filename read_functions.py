@@ -652,22 +652,22 @@ def return_event_V2(event_id,event_GPS, event_ns,event_data):
 
 
 
-def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
+def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data_aera):
 
 
-    Station=osm_data['Station']
-    Master_Or_Slave=osm_data['Master_Or_Slave']
+    Station_H=osm_data_hisparc['Station']
+    Master_Or_Slave_H=osm_data_hisparc['Master_Or_Slave']
     
     
-    GPS_Time_Stamp=osm_data['GPS_Time_Stamp']
-    Sync_Error=osm_data['Sync_Error']
-    Quant_Error=osm_data['Quant_Error']
-    CTP=osm_data['CTP']
+    GPS_Time_Stamp_H=osm_data_hisparc['GPS_Time_Stamp']
+    Sync_Error_H=osm_data_hisparc['Sync_Error']
+    Quant_Error_H=osm_data_hisparc['Quant_Error']
+    CTP_H=osm_data_hisparc['CTP']
 
     all_info=[]
     all_info1=[]
     all_info2=[]
-
+    '''
     for t in np.arange(3):
         #for i in np.arange(1):
         for i in np.arange(LORA.nLASA):
@@ -703,5 +703,5 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data):
                 all_info1.append(info)
             if t==2:
                 all_info2.append(info)
-
+    '''
     return all_info,all_info1,all_info2
