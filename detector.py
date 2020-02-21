@@ -87,7 +87,6 @@ class Lasa:
 
 
 def load_event_information(info,detectors):
-    #print info[0].keys()
     for i in np.arange(len(detectors)):
         detectors[i].number=i+1
         detectors[i].trigg_pattern=info[i]['trigg_pattern']
@@ -115,10 +114,10 @@ def load_event_information(info,detectors):
     if len(detectors)>20:
         for i in np.arange(5,10):
             print i*4+0
-            detectors[i*4+0] = int(detectors[i*4].trigg_pattern)>>8&1
-            detectors[i*4+1] = int(detectors[i*4].trigg_pattern)>>9&1
-            detectors[i*4+2] = int(detectors[i*4].trigg_pattern)>>10&1
-            detectors[i*4+3] =(detectors[i*4].trigg_pattern)>>11&1
+            detectors[i*4+0].trig = int(detectors[i*4].trigg_pattern)>>8&1
+            detectors[i*4+1].trig = int(detectors[i*4].trigg_pattern)>>9&1
+            detectors[i*4+2].trig = int(detectors[i*4].trigg_pattern)>>10&1
+            detectors[i*4+3].trig =int(detectors[i*4].trigg_pattern)>>11&1
         
 
 
