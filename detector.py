@@ -135,35 +135,51 @@ def load_sec_information(info0,info1,info2,lasas,V):
             lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
            
     if V=='V2':
-        for i in np.arange(len(lasas)):
-        
-        
-        
-            lasas[i].number=i+1
-
-            if info0[i]['CTP_S']==1 or info1[i]['CTP_S']==1 or info2[i]['CTP_S']==1:
-                lasas[i].sec_flag=1
-                
-                
-            print info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']
-    
-            if (info2[i]['GPS_time_stamp_M']!=info1[i]['GPS_time_stamp_M']+1) and (info1[i]['GPS_time_stamp_M']!=info0[i]['GPS_time_stamp_M']+1):
-                lasas[i].sec_flag=1
-      
-            lasas[i].CTP_M=np.asarray([info0[i]['CTP_M'],info1[i]['CTP_M'],info2[i]['CTP_M']])
-            lasas[i].CTP_S=np.asarray([info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']])
-
-            lasas[i].GPS_time_stamp_M=np.asarray([info0[i]['GPS_time_stamp_M'],info1[i]['GPS_time_stamp_M'],info2[i]['GPS_time_stamp_M']])
-            lasas[i].GPS_time_stamp_S=np.asarray([info0[i]['GPS_time_stamp_S'],info1[i]['GPS_time_stamp_S'],info2[i]['GPS_time_stamp_S']])
+     
+          for i in np.arange(5):
             
-            lasas[i].sync_M=np.asarray([info0[i]['sync_M'],info1[i]['sync_M'],info2[i]['sync_M']])
-            lasas[i].sync_S=np.asarray([info0[i]['sync_S'],info1[i]['sync_S'],info2[i]['sync_S']])
+                lasas[i].number=i+1
 
-            lasas[i].quant_M=np.asarray([info0[i]['quant_M'],info1[i]['quant_M'],info2[i]['quant_M']])
-            lasas[i].quant_S=np.asarray([info0[i]['quant_S'],info1[i]['quant_S'],info2[i]['quant_S']])
+                if info0[i]['CTP']==1 or info1[i]['CTP']==1 or info2[i]['CTP']==1:
+                    lasas[i].sec_flag=1
+                    
+                    
+        
+                if (info2[i]['GPS_time_stamp_M']!=info1[i]['GPS_time_stamp_M']+1) and (info1[i]['GPS_time_stamp_M']!=info0[i]['GPS_time_stamp_M']+1):
+                    lasas[i].sec_flag=1
+          
+                lasas[i].CTP_M=np.asarray([info0[i]['CTP_M'],info1[i]['CTP_M'],info2[i]['CTP_M']])
+                lasas[i].CTP_S=np.asarray([info0[i]['CTP_S'],info1[i]['CTP_S'],info2[i]['CTP_S']])
 
-            lasas[i].YMD_M=np.asarray([info0[i]['YMD_M'],info1[i]['YMD_M'],info2[i]['YMD_M']])
-            lasas[i].YMD_S=np.asarray([info0[i]['YMD_S'],info1[i]['YMD_S'],info2[i]['YMD_S']])
+                lasas[i].GPS_time_stamp_M=np.asarray([info0[i]['GPS_time_stamp_M'],info1[i]['GPS_time_stamp_M'],info2[i]['GPS_time_stamp_M']])
+                lasas[i].GPS_time_stamp_S=np.asarray([info0[i]['GPS_time_stamp_S'],info1[i]['GPS_time_stamp_S'],info2[i]['GPS_time_stamp_S']])
+                
+                lasas[i].sync_M=np.asarray([info0[i]['sync_M'],info1[i]['sync_M'],info2[i]['sync_M']])
+                lasas[i].sync_S=np.asarray([info0[i]['sync_S'],info1[i]['sync_S'],info2[i]['sync_S']])
+
+                lasas[i].quant_M=np.asarray([info0[i]['quant_M'],info1[i]['quant_M'],info2[i]['quant_M']])
+                lasas[i].quant_S=np.asarray([info0[i]['quant_S'],info1[i]['quant_S'],info2[i]['quant_S']])
+
+                lasas[i].YMD_M=np.asarray([info0[i]['YMD_M'],info1[i]['YMD_M'],info2[i]['YMD_M']])
+                lasas[i].YMD_S=np.asarray([info0[i]['YMD_S'],info1[i]['YMD_S'],info2[i]['YMD_S']])
+
+          for i in np.arange(5,10):
+               
+           
+            
+                lasas[i].number=i+1
+
+                if info0[i]['CTP_S']==1 or info1[i]['CTP_S']==1 or info2[i]['CTP_S']==1:
+                    lasas[i].sec_flag=1
+                
+        
+                if (info2[i]['GPS_time_stamp']!=info1[i]['GPS_time_stamp']+1) and (info1[i]['GPS_time_stamp']!=info0[i]['GPS_time_stamp']+1):
+                    lasas[i].sec_flag=1
+                lasas[i].CTP=np.asarray([info0[i]['CTP'],info1[i]['CTP'],info2[i]['CTP']])
+                lasas[i].GPS_time_stamp=np.asarray([info0[i]['GPS_time_stamp'],info1[i]['GPS_time_stamp'],info2[i]['GPS_time_stamp']])
+                lasas[i].sync_M=np.asarray([info0[i]['sync'],info1[i]['sync'],info2[i]['sync']])
+                lasas[i].quant_M=np.asarray([info0[i]['quant'],info1[i]['quant'],info2[i]['quant']])
+                lasas[i].YMD=np.asarray([info0[i]['YMD'],info1[i]['YMD'],info2[i]['YMD']])
 
 
 
