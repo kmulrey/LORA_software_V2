@@ -630,7 +630,7 @@ def return_event_V2(event_id,event_GPS, event_ns,event_data):
     
     print nsec
     print pulse_height
-    print nLORA
+    print LORA.nLORA
     for d in np.arange(LORA.nLORA):
         print 'detector ',d+1
         if (d+1) in dets:
