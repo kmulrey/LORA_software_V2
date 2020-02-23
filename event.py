@@ -148,7 +148,6 @@ def get_arrival_time(detector):
         
         cut=-1*detector.threshold
         flag=0
-        print cut, detector.number, flag
 
         for i in np.arange(LORA.nTrace):
             if detector.counts[i]<cut and flag==0:
