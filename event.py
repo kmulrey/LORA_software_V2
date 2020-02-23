@@ -115,7 +115,7 @@ def find_counts(detector):
 
     else:
         print 'running counts V2'
-        #detector.counts=detector.counts*-1+100
+        detector.counts=detector.counts*-1
         background=detector.counts[0:50]
         background_mean=np.average(background)
         background_rms=np.std(background)
@@ -123,7 +123,7 @@ def find_counts(detector):
         detector.trace_mean=background_mean
         detector.peak=np.max(detector.counts)
         print detector.number,background_mean,background_rms
-        '''
+        
         if(background_mean<300 and background_mean>0):
             detector.corrected_threshold=detector.threshold-background_mean
            
@@ -159,7 +159,7 @@ def find_counts(detector):
                 detector.trace_int_counts=total_count
 
             detector.corrected_peak=peak
-        '''
+        
         
         
         
