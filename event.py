@@ -115,13 +115,14 @@ def find_counts(detector):
 
     else:
         print 'running counts V2'
-        detector.counts=detector.counts*-1
+        #detector.counts=detector.counts*-1
         background=detector.counts[0:50]
         background_mean=np.average(background)
         background_rms=np.std(background)
         detector.trace_rms=background_rms
         detector.trace_mean=background_mean
         detector.peak=np.max(detector.counts)
+        
         print detector.number,background_mean,background_rms
         
         if(background_mean<300 and background_mean>0):
