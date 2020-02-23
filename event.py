@@ -65,56 +65,101 @@ def read_attenuation():
 
 def find_counts(detector):
 
-    if detector.number>20:
-        detector.counts=detector.counts*-1+100
-    
+    if detector.number<=20:
+       
     
     
         # find background
-    background=detector.counts[0:int(LORA.BG_No_Bin)]
-    background_mean=np.average(background)
-    background_rms=np.std(background)
-    detector.trace_rms=background_rms
-    detector.trace_mean=background_mean
-    detector.peak=np.max(detector.counts)
+        background=detector.counts[0:int(LORA.BG_No_Bin)]
+        background_mean=np.average(background)
+        background_rms=np.std(background)
+        detector.trace_rms=background_rms
+        detector.trace_mean=background_mean
+        detector.peak=np.max(detector.counts)
     
-    if(background_mean<300 and background_mean>0):
-        detector.corrected_threshold=detector.threshold-background_mean
+        if(background_mean<300 and background_mean>0):
+            detector.corrected_threshold=detector.threshold-background_mean
         
-        #print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
+            #print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
         
-    else:
-        detector.corrected_threshold=detector.threshold-detector.sec_mean
-        #print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
-        
-    if detector.corrected_threshold<0:
-        detector.corrected_threshold=detector.threshold-detector.sec_mean
-        
-    if detector.corrected_threshold<0:
-        print '~*~***~*~*~*~**~'
-        print 'what the heck is going on with this?????'
-        print detector.threshold,detector.sec_mean,background_mean
-        
-    if background_rms<10.0:
-        corrected=detector.counts-background_mean
-        peak=np.max(corrected)
-        max_bin=np.argmax(corrected)
-        if peak<LORA.Max_ADC_Count:
-            BIN_S=int(max_bin-detector.B_min) # start integration
-            BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
-            total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
         else:
-            total_count=0
-            BIN_S=int(max_bin-detector.B_min) # start integration
-            BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
+            detector.corrected_threshold=detector.threshold-detector.sec_mean
+            #print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
+        
+        if detector.corrected_threshold<0:
+            detector.corrected_threshold=detector.threshold-detector.sec_mean
+        
+        if detector.corrected_threshold<0:
+            print '~*~***~*~*~*~**~'
+            print 'what the heck is going on with this?????'
+            print detector.threshold,detector.sec_mean,background_mean
+        
+        if background_rms<10.0:
+            corrected=detector.counts-background_mean
+            peak=np.max(corrected)
+            max_bin=np.argmax(corrected)
+            if peak<LORA.Max_ADC_Count:
+                BIN_S=int(max_bin-detector.B_min) # start integration
+                BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
             total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
+            else:
+                total_count=0
+                BIN_S=int(max_bin-detector.B_min) # start integration
+                BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
+                total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
 
-        if total_count>0:
-            detector.trace_int_counts=total_count
+            if total_count>0:
+                detector.trace_int_counts=total_count
 
-        detector.corrected_peak=peak
+            detector.corrected_peak=peak
 
+    else:
+        print 'running counts V2'
+    #detector.counts=detector.counts*-1+100
+        background=detector.counts[0:int(LORA.BG_No_Bin)]
+        background_mean=np.average(background)
+        background_rms=np.std(background)
+        detector.trace_rms=background_rms
+        detector.trace_mean=background_mean
+        detector.peak=np.max(detector.counts)
+        print detector.number,background_mean,background_rms
+       '''
+        if(background_mean<300 and background_mean>0):
+            detector.corrected_threshold=detector.threshold-background_mean
+           
+            #print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
+           
+        else:
+            detector.corrected_threshold=detector.threshold-detector.sec_mean
+            #print 'finding threshold from second background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,detector.sec_mean)
+           
+        if detector.corrected_threshold<0:
+            detector.corrected_threshold=detector.threshold-detector.sec_mean
+           
+        if detector.corrected_threshold<0:
+            print '~*~***~*~*~*~**~'
+            print 'what the heck is going on with this?????'
+            print detector.threshold,detector.sec_mean,background_mean
+           
+        if background_rms<10.0:
+            corrected=detector.counts-background_mean
+            peak=np.max(corrected)
+            max_bin=np.argmax(corrected)
+            if peak<LORA.Max_ADC_Count:
+                BIN_S=int(max_bin-detector.B_min) # start integration
+                BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
+            total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
+            else:
+                total_count=0
+                BIN_S=int(max_bin-detector.B_min) # start integration
+                BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
+                total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
 
+            if total_count>0:
+                detector.trace_int_counts=total_count
+
+            detector.corrected_peak=peak
+        '''
         
         
         
