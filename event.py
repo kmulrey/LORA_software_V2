@@ -261,8 +261,8 @@ def cal_event_timestamp(detectors,lasa):
     trigg_cond=detectors[4*lasa_ind].trigg_condition
     thresh_times=np.asarray([detectors[4*int(lasa.number-1)].threshold_time,detectors[4*int(lasa.number-1)+1].threshold_time,detectors[4*int(lasa.number-1)+2].threshold_time,detectors[4*int(lasa.number-1)+3].threshold_time])
     thresh_use=1.0*thresh_times[thresh_times!=0]
-    print thresh_use
-    args='thresh_use: ',np.argsort(thresh_use)
+    print 'thresh_use: ',thresh_use
+    args=np.argsort(thresh_use)
     #print int(args[detectors[0].trigg_condition]-1)
     if len(thresh_use)>1:
         #print 'trigger condition: ',trigg_cond
@@ -287,6 +287,7 @@ def cal_event_timestamp(detectors,lasa):
         
 
         for i in np.arange(4):
+            print detectors[4*int(lasa_ind)+i].threshold_time>0
             if detectors[4*int(lasa_ind)+i].threshold_time>0:
             
                 detectors[4*int(lasa_ind)+i].cal_time=detectors[4*int(lasa_ind)+i].threshold_time-trigg_time+detectors[lasa_ind*4].event_time_stamp+det.cable_delay[4*int(lasa_ind)+i]
