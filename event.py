@@ -132,15 +132,28 @@ def retrive_sat_signal(detector):
 
 
 def get_arrival_time(detector):
-    cut=LORA.Det_Thres*detector.trace_rms+detector.trace_mean
-    flag=0
-    for i in np.arange(LORA.nTrace):
-        if detector.counts[i]>cut and flag==0:
-            if i<400:
-                continue
-            else:
-                detector.threshold_time=i*2.5*10  # unit of 0.1 ns
-                flag=1
+
+    if detector.number<=20:
+        cut=LORA.Det_Thres*detector.trace_rms+detector.trace_mean
+        flag=0
+        for i in np.arange(LORA.nTrace):
+            if detector.counts[i]>cut and flag==0:
+                if i<400:
+                    continue
+                else:
+                    detector.threshold_time=i*2.5*10  # unit of 0.1 ns
+                    flag=1
+                    
+    else:
+        cut=-1*detector.threshold
+        flag=0
+        for i in np.arange(LORA.nTrace):
+            if detector.counts[i]<cut and flag==0:
+                if i<400:
+                    continue
+                else:
+                    detector.threshold_time=i*5.0*10  # unit of 0.1 ns
+                    flag=1
 
 def get_event_timestamp(detector,lasa):
     print '_______event timestamp______'
@@ -183,11 +196,11 @@ def get_event_timestamp_V2(detector,lasa):
         
         if lasa.sec_flag!=1:
             detector.event_time_stamp=10*(lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2]))
-            print detector.event_time_stamp
+            #print detector.event_time_stamp
         else:
-            print 'flagged event'
+            #print 'flagged event'
             detector.event_time_stamp=10*detector.nsec
-            print detector.event_time_stamp
+            #print detector.event_time_stamp
 
 
 
