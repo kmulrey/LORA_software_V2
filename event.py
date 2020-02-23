@@ -244,12 +244,12 @@ def cal_event_timestamp(detectors,lasa):
 
 
 def do_arrival_time_diff(detectors):
-    event_times=np.zeros([LORA.nDetA])
-    event_weight=np.zeros([LORA.nDetA])
+    event_times=np.zeros([LORA.nDetB])
+    event_weight=np.zeros([LORA.nDetB])
 
     ind_0=1000
     time_min=1e10
-    for i in np.arange(LORA.nDetA):
+    for i in np.arange(LORA.nDetB):
         event_times[i]=detectors[i].final_event_time
         event_weight[i]=detectors[i].trace_int_counts
         #print i, event_times[i],event_weight[i]
@@ -258,7 +258,7 @@ def do_arrival_time_diff(detectors):
             ind_0=i
     #print ind_0, event_times[ind_0]
 
-    for i in np.arange(LORA.nDetA):
+    for i in np.arange(LORA.nDetB):
         if(event_times[i]>0 and event_weight[i]>0):
             detectors[i].cdt=(event_times[i]-event_times[ind_0])*0.1*(1.e-9*LORA.vel_light)
 
