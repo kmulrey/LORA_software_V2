@@ -229,13 +229,13 @@ def cal_event_timestamp(detectors,lasa):
                 trigg_time=thresh_use[args[int(trigg_cond)-1]]
             except: #this is in here becasue in a few cases the length of thresh_use was less than trigg. condition
                 trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
-            #print thresh_times,trigg_time
+            print 'V1: ',thresh_times,trigg_time
         else:
             try:
                 trigg_time=thresh_use[0]
             except: #this is in here becasue in a few cases the length of thresh_use was less than trigg. condition
                 trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
-            #print thresh_times,trigg_time
+            print 'V2: ',thresh_times,trigg_time
         
         
 
