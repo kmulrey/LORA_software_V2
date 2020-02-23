@@ -78,7 +78,7 @@ def find_counts(detector):
     detector.trace_mean=background_mean
     detector.peak=np.max(detector.counts)
     
-    if(background_mean<100 and background_mean>0):
+    if(background_mean<300 and background_mean>0):
         detector.corrected_threshold=detector.threshold-background_mean
         
         #print 'finding threshold from real background: {0}  {1}  {2}'.format(detector.corrected_threshold,detector.threshold,background_mean)
