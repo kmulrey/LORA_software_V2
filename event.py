@@ -65,7 +65,7 @@ def read_attenuation():
 
 def find_counts(detector):
 
-    if detector.number<20:
+    if detector.number>20:
         detector.counts=detector.counts*-1+100
     
     
@@ -248,7 +248,7 @@ def cal_event_timestamp(detectors,lasa):
 
                 # maybe this has to be corrected for wrap-around seconds
 
-            print '{0}   {1}  {2}  {3}  {4}  {5}'.format(4*int(lasa_ind)+i,int(detectors[4*int(lasa_ind)+i].cal_time),detectors[4*int(lasa_ind)+i].threshold_time, trigg_time,detectors[4*int(lasa_ind)+i].event_time_stamp,det.cable_delay[4*int(lasa_ind)+i])
+            #print '{0}   {1}  {2}  {3}  {4}  {5}'.format(4*int(lasa_ind)+i,int(detectors[4*int(lasa_ind)+i].cal_time),detectors[4*int(lasa_ind)+i].threshold_time, trigg_time,detectors[4*int(lasa_ind)+i].event_time_stamp,det.cable_delay[4*int(lasa_ind)+i])
 
 
 
