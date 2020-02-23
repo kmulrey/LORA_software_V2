@@ -115,7 +115,7 @@ def find_counts(detector):
 
     else:
         print 'running counts V2'
-        #detector.counts=detector.counts*-1
+        detector.counts=detector.counts*-1.0
         background=detector.counts[0:50]
         background_mean=np.average(background)
         background_rms=np.std(background)
