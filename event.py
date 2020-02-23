@@ -214,6 +214,7 @@ def cal_event_timestamp(detectors,lasa):
     #print 'trigger condition: {0}'.format(detectors[4*lasa_ind].trigg_condition)
     trigg_cond=detectors[4*lasa_ind].trigg_condition
     thresh_times=np.asarray([detectors[4*int(lasa.number-1)].threshold_time,detectors[4*int(lasa.number-1)+1].threshold_time,detectors[4*int(lasa.number-1)+2].threshold_time,detectors[4*int(lasa.number-1)+3].threshold_time])
+    print 'threshold times: ', threshold_times
     thresh_use=1.0*thresh_times[thresh_times!=0]
     args=np.argsort(thresh_use)
     #print int(args[detectors[0].trigg_condition]-1)
