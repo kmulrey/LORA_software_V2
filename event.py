@@ -252,7 +252,7 @@ def do_arrival_time_diff(detectors):
     for i in np.arange(LORA.nDetB):
         event_times[i]=detectors[i].final_event_time
         event_weight[i]=detectors[i].trace_int_counts
-        #print i, event_times[i],event_weight[i]
+        print i, event_times[i],event_weight[i]
         if event_times[i]<time_min and event_times[i]!=0:
             time_min=event_times[i]
             ind_0=i
