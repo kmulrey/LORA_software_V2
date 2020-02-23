@@ -145,11 +145,13 @@ def get_arrival_time(detector):
                     flag=1
                     
     else:
+        
         cut=-1*detector.threshold
+        print cut
         flag=0
         for i in np.arange(LORA.nTrace):
             if detector.counts[i]<cut and flag==0:
-                if i<400:
+                if i<100:
                     continue
                 else:
                     detector.threshold_time=i*5.0*10  # unit of 0.1 ns
