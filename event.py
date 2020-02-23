@@ -232,7 +232,7 @@ def cal_event_timestamp(detectors,lasa):
             print 'V1: ',thresh_times,trigg_time
         else:
             try:
-                trigg_time=thresh_use[0]
+                trigg_time=thresh_use[args[0]]
             except: #this is in here becasue in a few cases the length of thresh_use was less than trigg. condition
                 trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
             print 'V2: ',thresh_times,trigg_time
