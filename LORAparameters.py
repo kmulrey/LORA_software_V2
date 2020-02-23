@@ -46,7 +46,19 @@ BG_No_Bin=(BG_Max-BG_Min)/2.5    #No. of bins for background calculation
 Window_Open=70    #START of the signal time window [: T_peak-Window_open] nsecs
 Sig_Time_Window=1000    #END of the signal time window [: T_peak+Sig_Time_Window] nsecs
 
+
+
+BG_Min_V2=0            #t_min (nsec) for background calculation
+BG_Max_V2=100          #t_max (nsec) for background calculation
+BG_No_Bin_V2=(BG_Max-BG_Min)/5    #No. of bins for background calculation
+Window_Open_V2=70    #START of the signal time window [: T_peak-Window_open] nsecs
+Sig_Time_Window_V2=1000    #END of the signal time window [: T_peak+Sig_Time_Window] nsecs
+
+
+
 Max_ADC_Count=4075    #//Maximum ADC count (-background) cosidered as saturated
+Max_ADC_Count_V2=16000    #//Maximum ADC count (-background) cosidered as saturated
+
 Det_Thres=4
 
 vel_light=2.99792458e8    #velocity of light in m/sec.
