@@ -183,11 +183,11 @@ def get_event_timestamp_V2(detector,lasa):
         
         if lasa.sec_flag!=1:
             detector.event_time_stamp=10*(lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2]))
-            #print detector.event_time_stamp
+            print detector.event_time_stamp
         else:
-            #print 'flagged event'
+            print 'flagged event'
             detector.event_time_stamp=10*detector.nsec
-            #print detector.event_time_stamp
+            print detector.event_time_stamp
 
 
 
