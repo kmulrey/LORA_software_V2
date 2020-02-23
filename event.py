@@ -101,7 +101,7 @@ def find_counts(detector):
             if peak<LORA.Max_ADC_Count:
                 BIN_S=int(max_bin-detector.B_min) # start integration
                 BIN_E=int(max_bin+(int(LORA.Sig_Time_Window/2.5))) # end integration
-            total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
+                total_count=np.sum(corrected[BIN_S:BIN_E])-np.sum(corrected[0:(int(LORA.Sig_Time_Window/2.5))])
             else:
                 total_count=0
                 BIN_S=int(max_bin-detector.B_min) # start integration
