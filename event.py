@@ -115,7 +115,7 @@ def find_counts(detector):
 
     else:
         print 'running counts V2'
-    #detector.counts=detector.counts*-1+100
+        #detector.counts=detector.counts*-1+100
         background=detector.counts[0:int(LORA.BG_No_Bin)]
         background_mean=np.average(background)
         background_rms=np.std(background)
