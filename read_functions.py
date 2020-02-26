@@ -652,7 +652,7 @@ def return_event_V2(event_id,event_GPS, event_ns,event_data):
 
 
 
-def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc,osm_data_aera):
+def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc):#,osm_data_aera):
 
 
     Station_H=osm_data_hisparc['Station']
