@@ -1,7 +1,7 @@
 nDet=4
 dtV1=2.5
-nLORA=40
-nLASA=10
+nLORA=20
+nLASA=5
 nLasaB=10
 nLasaA=5
 
