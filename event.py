@@ -315,7 +315,7 @@ def do_arrival_time_diff(detectors):
             ind_0=i
     #print ind_0, event_times[ind_0]
 
-    for i in np.arange(LORA.nDetaA):
+    for i in np.arange(LORA.nDetA):
         if(event_times[i]>0 and event_weight[i]>0):
             detectors[i].cdt=(event_times[i]-event_times[ind_0])*0.1*(1.e-9*LORA.vel_light)
 
