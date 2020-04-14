@@ -60,7 +60,7 @@ def read_attenuation():
         data=np.genfromtxt(LORA.atm_file)
         return data
     except:
-        print 'problem reading atm file'
+        print('problem reading atm file')
         return 0
 
 def find_counts(detector):
@@ -90,9 +90,9 @@ def find_counts(detector):
             detector.corrected_threshold=detector.threshold-detector.sec_mean
         
         if detector.corrected_threshold<0:
-            print '~*~***~*~*~*~**~'
-            print 'what the heck is going on with this?????'
-            print detector.threshold,detector.sec_mean,background_mean
+            print('~*~***~*~*~*~**~')
+            print('what the heck is going on with this?????')
+            print(detector.threshold,detector.sec_mean,background_mean)
         
         if background_rms<10.0:
             corrected=detector.counts-background_mean
@@ -114,7 +114,7 @@ def find_counts(detector):
             detector.corrected_peak=peak
 
     else:
-        print 'running counts V2'
+        print('running counts V2')
         detector.counts=detector.counts*-1.0
         background=detector.counts[0:50]
         background_mean=np.average(background)
@@ -123,7 +123,7 @@ def find_counts(detector):
         detector.trace_mean=background_mean
         detector.peak=np.max(detector.counts)
         
-        print detector.number,background_mean,background_rms
+        print(detector.number,background_mean,background_rms)
         
         if(background_mean<300 and background_mean>0):
             detector.corrected_threshold=detector.threshold-background_mean
@@ -138,9 +138,9 @@ def find_counts(detector):
             detector.corrected_threshold=detector.threshold-detector.sec_mean
            
         if detector.corrected_threshold<0:
-            print '~*~***~*~*~*~**~'
-            print 'what the heck is going on with this?????'
-            print detector.threshold,detector.sec_mean,background_mean
+            print('~*~***~*~*~*~**~')
+            print('what the heck is going on with this?????')
+            print(detector.threshold,detector.sec_mean,background_mean)
            
         if background_rms<10.0:
             corrected=detector.counts-background_mean
@@ -204,18 +204,18 @@ def get_arrival_time(detector):
                     flag=1
 
 def get_event_timestamp(detector,lasa):
-    print '_______event timestamp______'
-    print lasa.CTP
-    print lasa.sec_flag
+    print('_______event timestamp______')
+    print(lasa.CTP)
+    print(lasa.sec_flag)
     if lasa.sec_flag!=1 and lasa.CTP[1]>0:
         detector.event_time_stamp=10*(lasa.sync[0]+lasa.quant[1]+(1.0*detector.ctd/lasa.CTP[1])*(1000000000.0-lasa.quant[1]+lasa.quant[2]))
-        print 'doing real time stamp '
-        print detector.event_time_stamp
+        print('doing real time stamp')
+        print(detector.event_time_stamp)
     else:
-        print 'doing est. time stamp '
+        print('doing est. time stamp ')
 
         detector.event_time_stamp=10*detector.nsec#10*(1.0*detector.ctd/200000000.0 )*(1000000000.0)
-        print detector.event_time_stamp
+        print(detector.event_time_stamp)
 
 def get_event_timestamp_V2(detector,lasa):
     
@@ -261,7 +261,7 @@ def cal_event_timestamp(detectors,lasa):
     trigg_cond=detectors[4*lasa_ind].trigg_condition
     thresh_times=np.asarray([detectors[4*int(lasa.number-1)].threshold_time,detectors[4*int(lasa.number-1)+1].threshold_time,detectors[4*int(lasa.number-1)+2].threshold_time,detectors[4*int(lasa.number-1)+3].threshold_time])
     thresh_use=1.0*thresh_times[thresh_times!=0]
-    print 'thresh_use: ',thresh_use
+    print('thresh_use: ',thresh_use)
     args=np.argsort(thresh_use)
     #print int(args[detectors[0].trigg_condition]-1)
     if len(thresh_use)>1:
@@ -276,13 +276,13 @@ def cal_event_timestamp(detectors,lasa):
                 trigg_time=thresh_use[args[int(trigg_cond)-1]]
             except: #this is in here becasue in a few cases the length of thresh_use was less than trigg. condition
                 trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
-            print 'V1: ',thresh_times,trigg_time
+            print('V1: ',thresh_times,trigg_time)
         else:
             try:
                 trigg_time=thresh_use[args[0]]
             except: #this is in here becasue in a few cases the length of thresh_use was less than trigg. condition
                 trigg_time=np.sort(thresh_use)[len(thresh_use)-1]
-            print 'V2: ',thresh_times,trigg_time
+            print('V2: ',thresh_times,trigg_time)
         
         
 
@@ -291,7 +291,7 @@ def cal_event_timestamp(detectors,lasa):
             
                 detectors[4*int(lasa_ind)+i].cal_time=detectors[4*int(lasa_ind)+i].threshold_time-trigg_time+detectors[lasa_ind*4].event_time_stamp+det.cable_delay[4*int(lasa_ind)+i]
                 detectors[4*int(lasa_ind)+i].final_event_time=detectors[4*int(lasa_ind)+i].cal_time
-                print detectors[4*int(lasa_ind)+i].number,  detectors[4*int(lasa_ind)+i].final_event_time
+                print(detectors[4*int(lasa_ind)+i].number,  detectors[4*int(lasa_ind)+i].final_event_time)
 
                 # maybe this has to be corrected for wrap-around seconds
 
@@ -309,7 +309,7 @@ def do_arrival_time_diff(detectors):
     for i in np.arange(LORA.nDetA):
         event_times[i]=detectors[i].final_event_time
         event_weight[i]=detectors[i].trace_int_counts
-        print i, event_times[i],event_weight[i]
+        print(i, event_times[i],event_weight[i])
         if event_times[i]<time_min and event_times[i]!=0:
             time_min=event_times[i]
             ind_0=i
@@ -362,7 +362,7 @@ def do_arrival_direction(detectors,event):
     
     
     
-    print 'direction params:  {0} {1}  {2}  {3}'.format(t0,m,l,n)
+    print('direction params:  {0} {1}  {2}  {3}'.format(t0,m,l,n))
 
     if l*l+m*m<1:
 
@@ -381,7 +381,7 @@ def do_arrival_direction(detectors,event):
     event.theta=theta
     event.phi=phi
     event.elevation=90.0-theta
-    print 'theta: {0:.2f}   phi: {1:.2f}    el: {2:.2f}'.format(event.theta,event.phi,event.elevation)
+    print('theta: {0:.2f}   phi: {1:.2f}    el: {2:.2f}'.format(event.theta,event.phi,event.elevation))
 
 
 def do_COM_core(detectors,event):
@@ -409,7 +409,7 @@ def do_COM_core(detectors,event):
     event.y_core=SumY/Event_Size
     event.z_core=0     #we assume that all the LORA detectors are at z=0
 
-    print 'core: ({0:.2f}, {1:.2f}, {2:.2f})'.format(event.x_core,event.y_core,event.z_core)
+    print('core: ({0:.2f}, {1:.2f}, {2:.2f})'.format(event.x_core,event.y_core,event.z_core))
 
 
 def find_density(detectors,event):
@@ -471,7 +471,7 @@ def fit_arrival_direction(detectors,event):
         event.fit_theta_err=err_theta
         event.fit_elevation_err=err_theta
         event.fit_phi_err=err_phi
-        print 'fitting doesn\'t work'
+        print('fitting doesn\'t work')
     else:
         event.fit_theta=theta
         event.fit_phi=phi
@@ -480,7 +480,7 @@ def fit_arrival_direction(detectors,event):
         event.fit_elevation_err=err_theta
         event.fit_phi_err=err_phi
 
-    print 'fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi)
+    print('fit    theta: {0:.2f}  phi: {1:.2f} '.format(theta,phi,err_theta,err_phi))
 
 
 def theta_phi(theta,phi,psi,x0,y0,z0):
@@ -642,7 +642,7 @@ def TF1_Fit_NKG(h1,N0,r0,s0,R_Min,R_Max):
 
 
 def fit_NKG(detectors,event):
-    print 'fit core position'
+    print('fit core position')
     
     # directions for fitting
     theta=(event.fit_theta)*np.pi/180.0
@@ -733,8 +733,8 @@ def fit_NKG(detectors,event):
 
     # first iteration of fit -> doing Ne, xcore, ycore
     Ne_fit,rM_fit,s_fit,x_core_fit,y_core_fit,x_core_fit_err,y_core_fit_err, corr_coef_xy=TF2_Fit_NKG(evt_display_shower,shower_size/f_den,LORA.rM,LORA.Age,x_core,y_core,x_min_shower,x_max_shower,y_min_shower,y_max_shower)
-    print 'x:   {0:.2f}   ->  {1:.2f}'.format(x_core, x_core_fit)
-    print 'y:   {0:.2f}   ->  {1:.2f}'.format(y_core, y_core_fit)
+    print('x:   {0:.2f}   ->  {1:.2f}'.format(x_core, x_core_fit))
+    print('y:   {0:.2f}   ->  {1:.2f}'.format(y_core, y_core_fit))
 
     #print 'Ne:  {0:.2f}   ->  {1:.2f}'.format(shower_size/f_den, Ne_fit)
 
@@ -764,7 +764,7 @@ def fit_NKG(detectors,event):
 
     Ne_fit,rM_fit,s_fit,Ne_fit_er=TF1_Fit_NKG(lat_den_show,Ne_fit,LORA.rM,LORA.Age,R_Min,R_Max)
 
-    print 'Ne:  {0:.2f},   Rm:  {1:.2f}, xCore:  {2:.2f},  yCore:  {3:.2f}'.format(Ne_fit, rM_fit,x_core_fit, y_core_fit)
+    print('Ne:  {0:.2f},   Rm:  {1:.2f}, xCore:  {2:.2f},  yCore:  {3:.2f}'.format(Ne_fit, rM_fit,x_core_fit, y_core_fit))
 
 
 
@@ -792,7 +792,7 @@ def fit_NKG(detectors,event):
 
         Ne_fit,rM_fit,s_fit,Ne_fit_err=TF1_Fit_NKG(lat_den_show,Ne_fit,rM_fit,s_fit,R_Min,R_Max)
 
-        print 'Ne:  {0:.2f},   Rm:  {1:.2f}, xCore:  {2:.2f},  yCore:  {3:.2f}'.format(Ne_fit, rM_fit,x_core_fit,y_core_fit)
+        print('Ne:  {0:.2f},   Rm:  {1:.2f}, xCore:  {2:.2f},  yCore:  {3:.2f}'.format(Ne_fit, rM_fit,x_core_fit,y_core_fit))
 
     
 
@@ -801,7 +801,7 @@ def fit_NKG(detectors,event):
     atm_data=read_attenuation()
     size_theta=np.zeros([30])
     if len(atm_data)!=11:
-        print 'no atm corrections'
+        print('no atm corrections')
     else:
         f_no=len(atm_data)
         f_int=atm_data.T[0]
@@ -820,13 +820,13 @@ def fit_NKG(detectors,event):
             if np.log10(Ne_fit) >= size_theta[1]: ## typo?   1->k?
                 Lambda0=f_lamb[k]    #  //Extropolation
                 err_Lambda0=err3[k]
-                print 'Extrapolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0)
+                print('Extrapolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0))
                 break
             
             elif np.log10(Ne_fit) >= size_theta[k]:
                 Lambda0=(f_lamb[k]*(np.log10(Ne_fit)-size_theta[k-1])+f_lamb[k-1]*(size_theta[k]-np.log10(Ne_fit)))/(size_theta[k]-size_theta[k-1]) #  //Interpolation
                 err_Lambda0=(err3[k]*(np.log10(Ne_fit)-size_theta[k-1])+err3[k-1]*(size_theta[k]-np.log10(Ne_fit)))/(size_theta[k]-size_theta[k-1]) #  //Interpolation
-                print 'Interpolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0)
+                print('Interpolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0))
                 break
     ####
 
@@ -835,7 +835,7 @@ def fit_NKG(detectors,event):
     if np.log10(Ne_fit) >= size_theta[f_no-1]:
         Lambda0=f_lamb[f_no-1] #; //Extropolation
         err_Lambda0=err3[f_no-1]
-        print 'Extrapolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0)
+        print('Extrapolation: k={0}  s_theta={1}  s2={2}  lamb={3}'.format(k,size_theta[k],np.log10(Ne_fit),Lambda0))
 
 
     log_size_Ref=np.log10(Ne_fit)+(LORA.X0/Lambda0)*(1/np.cos(theta)-1/np.cos(np.pi*LORA.Ref_angle/180.0))*0.4342944819# ; //log10()
@@ -857,7 +857,7 @@ def fit_NKG(detectors,event):
 
     x_core_ground=l*(-Z3/n)+X3 ;
     y_core_ground=m*(-Z3/n)+Y3 ;
-    print 'x_core={0:.2f}   y_core={1:.2f}'.format(x_core_ground,y_core_ground)
+    print('x_core={0:.2f}   y_core={1:.2f}'.format(x_core_ground,y_core_ground))
 
     energy=np.power(Ne_fit,LORA.par_b)*np.power(10.0,LORA.par_a)*np.power(10.0,-6.0)# ; //Energy (PeV): Formula from KASCADE simulation (2008)
     err_energy=np.sqrt(np.power(np.log(10)*LORA.err_a,2)+np.power(np.log10(Ne_fit)*LORA.err_b,2)+np.power(LORA.par_b*Ne_fit_err/Ne_fit,2))*energy #;    //error on energy
