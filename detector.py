@@ -189,7 +189,9 @@ def load_sec_information(info0,info1,info2,lasas,V):
 
 
 def load_positions(detectors):
-    file=open(LORA.det_cord_file,'r')
+    #file=open(LORA.det_cord_file,'r')
+    file=LORA.det_cord_file
+
     cordinates=np.genfromtxt(file,skip_header=2,usecols=(1,2,3))
     file.close()
     for i in np.arange(LORA.nDetA):
@@ -201,7 +203,9 @@ def load_positions(detectors):
 
 def load_signal(detectors):
     
-    file=open(LORA.signal_retrieve_file,'r')
+    #file=open(LORA.signal_retrieve_file,'r')
+    file=LORA.signal_retrieve_file
+
     info=np.genfromtxt(file,skip_header=8,usecols=(1,2,3,4,5,6))
     file.close()
     for i in np.arange(LORA.nDetA):
@@ -214,7 +218,9 @@ def load_signal(detectors):
 
 def load_gain(detectors):
     
-    file=open(LORA.gain_cal_file,'r')
+    #file=open(LORA.gain_cal_file,'r')
+    file=LORA.gain_cal_file
+
     info=np.genfromtxt(file,usecols=(1))
     file.close()
     for i in np.arange(LORA.nDetA):
