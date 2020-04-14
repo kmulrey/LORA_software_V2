@@ -253,7 +253,7 @@ def getDataV1(det, entry):
     counts=det.GetLeaf('counts')
     hold=np.zeros([nTraceV1])
     for i in np.arange(nTraceV1):
-        hold[i]=counts.GetValue(i)
+        hold[i]=counts.GetValue(int(i))
 
     info={'det':detector,'ymd':ymd,'gps':gps,'ctd':ctd,'nsec':nsec,'trigg_condition':trigg_condition,'trigg_pattern':trigg_pattern,'total_counts':total_counts,'pulse_height':pulse_height,'pulse_width':pulse_width,'counts':hold}
     return info
