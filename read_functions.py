@@ -578,7 +578,7 @@ def log_file(filename,data_dir):
                 cnt += 1
 
     except:
-        (print 'can\'t find log file')
+        print('can\'t find log file')
     '''
     print 'LOFAR trigger: ',LOFAR_trig
     print 'lasa 1: ',lasa1_status
