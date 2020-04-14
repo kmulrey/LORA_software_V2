@@ -32,9 +32,9 @@ def find_tag(timestamp,ns_timestamp,data_dir):
     
     #print year,month,day,hour
     #print int(timestamp),int(ns_timestamp)
-    print 'day:    ',day
-    print 'month:    ',month
-    print 'year:    ',year
+    print('day:    ',day)
+    print('month:    ',month)
+    print('year:    ',year)
 
     filestr1= str(year)+str(month).zfill(2)+str(day).zfill(2)
     filestr3='-1'
@@ -83,7 +83,7 @@ def find_tag(timestamp,ns_timestamp,data_dir):
         try:
             stamps=np.genfromtxt(file,skip_header=10,usecols=(2,3))
         except:
-            print 'empty log'
+            print('empty log')
         file.close()
 
         if len(stamps)>0:
@@ -105,7 +105,7 @@ def find_tag_exception(timestamp,ns_timestamp,data_dir):
     #timestamp = LORA4times[t][0]
     #ns_timestamp = LORA4times[t][1]
     
-    print 'no standard log file avaliable, trying to look at .root files'
+    print('no standard log file avaliable, trying to look at .root files')
     
     dt_object = datetime.fromtimestamp(timestamp)
     year=dt_object.year
@@ -152,7 +152,7 @@ def find_tag_exception(timestamp,ns_timestamp,data_dir):
             if '.root' in file:
                 #print(os.path.join(data_dir, file))
                 filelist.append(os.path.join(data_dir, file))
-    print filelist
+    print(filelist)
     
     found=0
     filetag='no'
@@ -166,17 +166,17 @@ def find_tag_exception(timestamp,ns_timestamp,data_dir):
         
             event_index=-1
             event_index=find_entry_number(timestamp,ns_timestamp,tree_event)
-            print 'did we find the index?   {0}'.format(event_index)
+            print('did we find the index?   {0}'.format(event_index))
         
             if event_index>-1:
                 found=1
                 filetag=filelist[i].split('raw/')[1].split('.')[0]
                 break
         except:
-            print 'can\'t open the event leaf'
+            print('can\'t open the event leaf')
     
     if found==1:
-        print 'returning file tag'
+        print('returning file tag')
         return filetag
     
     else:
@@ -264,7 +264,7 @@ def return_root(filename,utc,nsec,data_dir):
 
     #log_file=open(data_dir+filename+'.log','r')
     root_file=ROOT.TFile.Open(data_dir+filename+'.root')
-    print 'reading root file: {0}'.format(data_dir+filename+'.root')
+    print('reading root file: {0}'.format(data_dir+filename+'.root'))
     tree_sec = root_file.Get("Tree_sec")
     tree_event = root_file.Get("Tree_event")
     tree_log = root_file.Get("Tree_log")
@@ -392,10 +392,10 @@ def getLogV1(det,d, entry):
     GPS_time_stamp=det.GetLeaf('Time_stamp').GetValue()
     Threshold_low=det.GetLeaf('Channel_thres_low').GetValue()
     
-    print '_________________________________________'
-    print 'finding threshold:  {0}'.format(Threshold_low)
+    print('_________________________________________')
+    print('finding threshold:  {0}'.format(Threshold_low))
     if Threshold_low==0.0:
-        print 'issue with Threshold_low {0}'.format(nE)
+        print('issue with Threshold_low {0}'.format(nE))
         thresh_avg=0
         thresh_count=0
         for i in np.arange(nE):
@@ -578,7 +578,7 @@ def log_file(filename,data_dir):
                 cnt += 1
 
     except:
-        print 'can\'t find log file'
+        (print 'can\'t find log file')
     '''
     print 'LOFAR trigger: ',LOFAR_trig
     print 'lasa 1: ',lasa1_status
@@ -703,7 +703,7 @@ def return_second_data_V2(event_id,event_GPS, event_ns,osm_data_hisparc):#,osm_d
                     info={'lasa':lasa,'YMD_M':np.asarray([0]),'GPS_time_stamp_M':np.asarray([0]),'sync_M':np.asarray([0]),'CTP_M':np.asarray([0]),'quant_M':np.asarray([0]),'YMD_S':np.asarray([0]),'GPS_time_stamp_S':np.asarray([0]),'sync_S':np.asarray([0]),'CTP_S':np.asarray([0]),'quant_S':np.asarray([0])}
             
             else:
-                print 'no'
+                print('no')
                 '''
                 gps= GPS_Time_Stamp_A[(GPS_Time_Stamp_A==(event_GPS+t))*(Station_A==i+1)]
                 if len(gps>0):
