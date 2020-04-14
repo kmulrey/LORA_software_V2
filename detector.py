@@ -193,7 +193,7 @@ def load_positions(detectors):
     file=LORA.det_cord_file
 
     cordinates=np.genfromtxt(file,skip_header=2,usecols=(1,2,3))
-    file.close()
+    #file.close()
     for i in np.arange(LORA.nDetA):
         detectors[i].x_cord=cordinates[i][0]
         detectors[i].y_cord=cordinates[i][1]
@@ -207,7 +207,7 @@ def load_signal(detectors):
     file=LORA.signal_retrieve_file
 
     info=np.genfromtxt(file,skip_header=8,usecols=(1,2,3,4,5,6))
-    file.close()
+    #file.close()
     for i in np.arange(LORA.nDetA):
         detectors[i].fArea12=info[i][0]
         detectors[i].err_fArea12=info[i][1]
@@ -222,7 +222,7 @@ def load_gain(detectors):
     file=LORA.gain_cal_file
 
     info=np.genfromtxt(file,usecols=(1))
-    file.close()
+    #file.close()
     for i in np.arange(LORA.nDetA):
         detectors[i].gain=info[i]
 
