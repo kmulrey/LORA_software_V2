@@ -180,7 +180,7 @@ def find_counts_backgroundV2(detector):
         new_trace = remove_simple_baseline(temp[0])
         charge, peak = return_charge_and_peak(new_trace)
         print(charge,peak)
-   
+        detector.total_counts_backgroundV2=charge
         '''
         # find background
         background=detector.counts[0:int(LORA.BG_No_Bin)]
