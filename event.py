@@ -176,9 +176,11 @@ def find_counts_backgroundV2(detector):
 
     if detector.number<=20:
    
+        temp=remove_noise_via_fft(detector.counts)
+        print(temp.shape)
+        #new_trace = remove_simple_baseline(temp[0])
+        #charge, peak = return_charge_and_peak(new_trace)
    
-   
-        print('doing background correction')
         '''
         # find background
         background=detector.counts[0:int(LORA.BG_No_Bin)]
@@ -948,3 +950,136 @@ def fit_NKG(detectors,event):
     event.Energy_RefA=energy_Ref
     event.EnergyErr_RefA=err_energy_Ref
 
+
+
+def remove_noise_via_fft(trace, wpre_index=30, wpost_index=500):
+    peak_index=np.argmax(trace)
+
+    if peak_index>3000:
+        peak_index = 3000
+
+    tw_start = peak_index - wpre_index
+    tw_stop = peak_index + wpost_index
+
+    if tw_start<0:
+        tw_stop += -1.*tw_start
+        tw_start=0
+    elif tw_stop>len(trace):
+        tw_start -= (tw_stop - len(trace))
+        tw_stop = len(trace)
+
+    tw_start= int(tw_start)
+    tw_stop= int(tw_stop)
+
+    assert( (tw_stop-tw_start) == (wpre_index+wpost_index) )
+
+    ontw_trace=trace[tw_start: tw_stop]
+    #assert(len(ontw_trace)<1023)
+#     zero_pad=np.zeros(1024-len(ontw_trace))
+#     ontw_trace=np.append(ontw_trace,zero_pad)
+
+    offtw_trace=trace[tw_stop:]
+    #assert(len(offtw_trace)<4095)
+    #zero_pad=np.zeros(4096-len(offtw_trace))
+    #offtw_trace=np.append(offtw_trace,zero_pad)
+
+    spec_offtw=np.fft.rfft(offtw_trace)
+    spec_ontw=np.fft.rfft(ontw_trace)
+    spec_full=np.fft.rfft(trace)
+
+    # freq_offtw=np.fft.rfftfreq(len(offtw_trace),d=2.5e-9)#2.5ns sample spacing
+    # freq_ontw=np.fft.rfftfreq(len(ontw_trace),d=2.5e-9)#2.5ns sample spacing
+    freq_full=np.fft.rfftfreq(len(trace),d=2.5e-9)#2.5ns sample spacing
+
+    # ratio_with_offtw=np.array([])
+    # store_loc=0
+    # for kk in range(len(freq_ontw)):
+    #     for ll in range(store_loc,len(freq_offtw)):
+    #         if freq_ontw[kk]==freq_offtw[ll]:
+    #             store_loc=ll
+    #             break
+    #     r=np.log10(np.absolute(spec_offtw[store_loc])/np.absolute(spec_ontw[kk]))
+    #     ratio_with_offtw=np.append(ratio_with_offtw,r)
+    #
+    # ratio_with_full=np.array([])
+    # store_loc=0
+    # for kk in range(len(freq_ontw)):
+    #     for ll in range(store_loc,len(freq_full)):
+    #         if freq_ontw[kk]==freq_full[ll]:
+    #             store_loc=ll
+    #             break
+    #     r=np.log10(np.absolute(spec_full[store_loc])/np.absolute(spec_ontw[kk]))
+    #     ratio_with_full=np.append(ratio_with_full,r)
+
+    spec_full[freq_full>75e6]=0+0j
+    rev_trace=np.fft.irfft(spec_full)
+    rev_trace=remove_simple_baseline(rev_trace)
+
+    return rev_trace, spec_ontw, spec_offtw
+    #, spec_full
+    # , ratio_with_offtw, ratio_with_full
+
+
+
+def remove_simple_baseline(trace, wpre_index=30, wpost_index=320, offtw_len=100):
+        peak_index=np.argmax(trace)
+        if peak_index>3000:
+            peak_index = 3000
+
+        tw_start = peak_index - wpre_index
+        tw_stop = peak_index + wpost_index
+
+        if tw_start<0:
+            tw_stop += -1.*tw_start
+            tw_start=0
+        elif tw_stop>len(trace):
+            tw_start -= (tw_stop - len(trace))
+            tw_stop = len(trace)
+
+        tw_start= int(tw_start)
+        tw_stop= int(tw_stop)
+
+        assert( (tw_stop-tw_start) == (wpre_index+wpost_index) )
+
+        #find offwtrace
+        # offwtrace = trace[tw_start:0:-1]
+        #if len(offwtrace)<offtw_len:
+            #print ("offwtracelen:",len(offwtrace))
+        #    offwtrace=np.concatenate([offwtrace, trace[tw_stop:]])
+        # offwtrace=offwtrace[:offtw_len]
+
+
+        offwtrace1 = trace[tw_start:0:-1][:offtw_len]
+        offwtrace2 = trace[tw_stop:][:offtw_len]
+        offwtrace=np.concatenate([offwtrace1, offwtrace2])
+
+        offwmean = np.mean(offwtrace)
+
+        final_trace = trace - offwmean
+
+        return final_trace
+
+def return_charge_and_peak(trace, wpre_index=30, wpost_index=320):
+        peak_index=np.argmax(trace)
+        if peak_index>3000:
+            peak_index = 3000
+
+        tw_start = peak_index - wpre_index
+        tw_stop = peak_index + wpost_index
+
+        if tw_start<0:
+            tw_stop += -1.*tw_start
+            tw_start=0
+        elif tw_stop>len(trace):
+            tw_start -= (tw_stop - len(trace))
+            tw_stop = len(trace)
+
+        tw_start= int(tw_start)
+        tw_stop= int(tw_stop)
+
+        assert( (tw_stop-tw_start) == (wpre_index+wpost_index) )
+
+        peak= trace[peak_index]
+        charge = np.sum( trace[tw_start : tw_stop] )
+
+        return charge, peak
