@@ -2,8 +2,8 @@
 #SBATCH --time=3:00:00
 
 
-source /vol/astro7/lofar/hpandya/root/my_build/bin/thisroot.sh
-
+#source /vol/astro7/lofar/hpandya/root/my_build/bin/thisroot.sh
+use root
 
 
 
