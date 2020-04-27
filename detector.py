@@ -27,6 +27,8 @@ class Detector:
     trigg_pattern=0
     nsec=0
     total_counts=0
+    total_counts_backgroundV2=0
+
     counts=np.zeros([LORA.nTrace])
     trigg_condition=0
     ctd=0
