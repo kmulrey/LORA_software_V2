@@ -2,7 +2,10 @@
 #SBATCH --time=3:00:00
 
 
-use root
+source /vol/astro7/lofar/hpandya/root/my_build/bin/thisroot.sh
+
+
+
 
 RUNNR=$(printf %06d $SLURM_ARRAY_TASK_ID)
 

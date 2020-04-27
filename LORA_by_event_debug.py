@@ -28,7 +28,7 @@ ind=int(float(options.ind))
 data_dir='/vol/astro3/lofar/vhecr/lora_triggered/LORAraw/'
 LORA4times=np.genfromtxt('/vol/astro3/lofar/vhecr/lora_triggered/LORA/'+'LORAtime4')
 #outputdir='LORAnew/'
-outputdir='/vol/astro7/lofar/lora/LORA_V2/'
+outputdir='/vol/astro7/lofar/lora/LORA_V2/test_baseline/'
 
 detectors=[]
 lasas=[]
@@ -133,8 +133,8 @@ for t in np.arange(run):
         event.get_arrival_time(detectors[d])
         #print 'getting timestamp for----> {0}  {1}'.format(d, int((detectors[d].number-1)/4))
         event.get_event_timestamp(detectors[d],lasas[int((detectors[d].number-1)/4)])
-        
-        
+        event.find_counts_backgroundV2(detectors[d])
+        detectors[d].trace_int_counts=detectors[d].total_counts_backgroundV2
         print 'threshold: {0:.2f},  corr peak: {1:.2f}, baseline: {2:.2f}, mean: {6:.2f}, sigma: {7:.2f}, peak: {3:.2f},  trigger: {4}, {5}'.format(detectors[d].threshold,detectors[d].corrected_peak,detectors[d].trace_mean, detectors[d].peak,detectors[d].trig,detectors[d].trigg_condition,detectors[d].sec_mean,detectors[d].sec_sigma)
 
     for l in np.arange(LORA.nLasaA):
