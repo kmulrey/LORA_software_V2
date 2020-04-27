@@ -177,7 +177,7 @@ def find_counts_backgroundV2(detector):
     if detector.number<=20:
    
         temp=remove_noise_via_fft(detector.counts)
-        print(temp.shape)
+        print(temp)
         #new_trace = remove_simple_baseline(temp[0])
         #charge, peak = return_charge_and_peak(new_trace)
    
